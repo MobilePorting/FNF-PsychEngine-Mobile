@@ -114,11 +114,25 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('FPS Counter',
-			'If unchecked, the hides FPS Counter.',
+			'If unchecked, hides the FPS Counter.',
 			'showFPS',
 			'bool');
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
+//WOW THE SKILL ISSUE
+
+
+		var option:Option = new Option('Memory Peak',						 
+			'if unchecked, hides the memory peak Counter.',						 
+			'MEMP',						
+			'bool');				
+		addOption(option);
+
+		var option:Option = new Option('GL Render',						 
+			'if checked, uses GL Render.',						 
+			'GLRender',						
+			'bool');				
+		addOption(option);
 		
 		var option:Option = new Option('Pause Screen Song:',
 			"Which song do you prefer for the Pause Screen?",
