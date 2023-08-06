@@ -13,8 +13,6 @@ import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
 #end
 
-	
-
 /**
 	The FPS class provides an easy-to-use monitor to display
 	the current frame rate of an OpenFL project
@@ -108,12 +106,12 @@ class FPS extends TextField
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
-		        if(ClientPrefs.MEMP)
+		        if(ClientPrefs.data.MEMP)
 			{
                         text += "\nMemory Peak: " + memoryTotal + " MB";
 			}
 
-                       if(ClientPrefs.GLRender)
+                        if(ClientPrefs.data.GLRender)
 			{
  			text += "\nGL Render: " + '${getGLInfo(RENDERER)}'; 
 			text += "\nGLShading Version: " + '${getGLInfo(SHADING_LANGUAGE_VERSION)}';
@@ -124,7 +122,7 @@ class FPS extends TextField
 			#end
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.data.framerate / 2)
+			if (#if mobile memoryMegas > 1000 #else memoryMegas > 3000 #end || currentFPS <= ClientPrefs.data.framerate / 2)
 			{
 				textColor = 0xFFFF0000;
 			}
