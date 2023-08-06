@@ -14,6 +14,8 @@ class SaveVariables {
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;
 	public var showFPS:Bool = true;
+	public var MEMP:Bool = true;
+	public var GLRender:Bool = false;
 	public var flashing:Bool = true;
 	public var autoPause:Bool = true;
 	public var antialiasing:Bool = true;
@@ -221,6 +223,16 @@ class ClientPrefs {
 		
 		if(Main.fpsVar != null) {
 			Main.fpsVar.visible = data.showFPS;
+		}
+		
+		if(FlxG.save.data.GLRender != null) {						GLRender =
+		FlxG.save.data.GLRender;					if(Main.fpsVar != null) {
+		Main.fpsVar.visible = GLRender;	
+		  }			
+		}
+
+		if (FlxG.save.data.MEMP != null) {			
+		   MEMP = FlxG.save.data.MEMP;		
 		}
 
 		#if (!html5 && !switch)
