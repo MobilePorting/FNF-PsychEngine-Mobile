@@ -103,7 +103,7 @@ class FPS extends TextField
 
 			text = "FPS: " + currentFPS;
 			
-			#if openfl
+			#if (openfl && lime)
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 
@@ -112,15 +112,15 @@ class FPS extends TextField
                         text += "\nMemory Peak: " + memoryTotal + " MB";
 			}
 
+			#if lime
+			text += "\nOS: " + '${lime.system.System.platformLabel}';
+			#end
+
                         if(ClientPrefs.data.GLRender)
 			{
  			text += "\nGL Render: " + '${getGLInfo(RENDERER)}'; 
 			text += "\nGLShading Version: " + '${getGLInfo(SHADING_LANGUAGE_VERSION)}';
 			}
-			#end
-				
-			#if lime
-			text += "\nOS: " + '${lime.system.System.platformLabel}';
 			#end
 
 			textColor = 0xFFFFFFFF;
