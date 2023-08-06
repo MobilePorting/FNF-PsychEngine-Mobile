@@ -225,11 +225,10 @@ class ClientPrefs {
 			Main.fpsVar.visible = data.showFPS;
 		}
 		
-		if(FlxG.save.data.GLRender != null) {						GLRender =
-		FlxG.save.data.GLRender;					if(Main.fpsVar != null) {
-		Main.fpsVar.visible = GLRender;	
+		if(FlxG.save.data.GLRender != null) {
+			GLRender = FlxG.save.data.GLRender;
 		  }			
-		}
+		
 
 		if (FlxG.save.data.MEMP != null) {			
 		   MEMP = FlxG.save.data.MEMP;		
