@@ -13,6 +13,8 @@ import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
 #end
 
+	
+
 /**
 	The FPS class provides an easy-to-use monitor to display
 	the current frame rate of an OpenFL project
@@ -21,6 +23,13 @@ import openfl.display._internal.stats.DrawCallContext;
 @:fileXml('tags="haxe,release"')
 @:noDebug
 #end
+
+enum GLInfo
+{	
+	RENDERER;	
+	SHADING_LANGUAGE_VERSION;
+}
+	
 class FPS extends TextField
 {
 	/**
@@ -98,6 +107,18 @@ class FPS extends TextField
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
+
+		        if(ClientPrefs.MEMP)
+			{
+                        text += "\nMemory Peak: " + memoryTotal + " MB";
+			}
+
+                       if(ClientPrefs.GLRender)
+			{
+ 			text += "\nGL Render: " + '${getGLInfo(RENDERER)}'; 
+			text += "\nGLShading Version: " + '${getGLInfo(SHADING_LANGUAGE_VERSION)}';
+			}
+				
 			#if lime
 			text += "\nOS: " + '${lime.system.System.platformLabel}';
 			#end
@@ -119,4 +140,17 @@ class FPS extends TextField
 
 		cacheCount = currentCount;
 	}
+	private function getGLInfo(info:GLInfo):String	{		
+		@:privateAccess		
+			var gl:Dynamic = Lib.current.stage.context3D.gl;
+		switch (info)		
+		{			
+			case RENDERER:				
+				return Std.string(gl.getParameter(gl.RENDERER));			
+			case SHADING_LANGUAGE_VERSION:				
+				return Std.string(gl.getParameter(gl.SHADING_LANGUAGE_VERSION));		
+		}
+		return '';	
+	}
+
 }
