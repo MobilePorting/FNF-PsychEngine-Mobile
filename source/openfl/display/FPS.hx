@@ -140,6 +140,7 @@ class FPS extends TextField
 
 		cacheCount = currentCount;
 	}
+	
 	private function getGLInfo(info:GLInfo):String	{		
 		@:privateAccess		
 			var gl:Dynamic = Lib.current.stage.context3D.gl;
