@@ -34,8 +34,6 @@ class FPS extends TextField
 		The current frame rate, expressed using frames-per-second
 	**/
 	public var currentFPS(default, null):Int;
-	private var memoryMegas:Float = 0;	
-	private var memoryTotal:Float = 0;
 
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
@@ -100,13 +98,14 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
+			var memoryTotal:Float = 0;
+
+			text = "FPS: " + currentFPS;
 			
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
-			#end
 
 		        if(ClientPrefs.data.MEMP)
 			{
@@ -118,6 +117,7 @@ class FPS extends TextField
  			text += "\nGL Render: " + '${getGLInfo(RENDERER)}'; 
 			text += "\nGLShading Version: " + '${getGLInfo(SHADING_LANGUAGE_VERSION)}';
 			}
+			#end
 				
 			#if lime
 			text += "\nOS: " + '${lime.system.System.platformLabel}';
