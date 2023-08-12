@@ -289,8 +289,8 @@ class Controls
 				final hit = state.instance.hitbox.virtualPad.mobileControlsPressed(key); // kewl
 				return controllerMode = (virt) ? virt : (hit) ? hit : false;
 			}
-			return false;
 		}
+		return false;
 	}
 
 	private function mobileCJustPressed(keys:Array<FlxMobileControlsID>):Bool
@@ -307,8 +307,8 @@ class Controls
 				final hit = state.instance.hitbox.virtualPad.mobileControlsJustPressed(key); // kewl
 				return controllerMode = (virt) ? virt : (hit) ? hit : false;
 			}
-			return false;
 		}
+		return false;
 	}
 
 	private function mobileCJustReleased(keys:Array<FlxMobileControlsID>):Bool
@@ -325,8 +325,8 @@ class Controls
 				final hit = state.instance.hitbox.virtualPad.mobileControlsJustReleased(key); // kewl
 				return controllerMode = (virt) ? virt : (hit) ? hit : false;
 			}
-			return false;
 		}
+		return false;
 	}
 	#end
 
