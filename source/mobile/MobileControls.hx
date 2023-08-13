@@ -6,6 +6,7 @@ import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
 import flixel.util.FlxDestroyUtil;
+import mobile.flixel.FlxMobileControlsID;
 
 class MobileControls extends FlxSpriteGroup
 {
@@ -147,4 +148,140 @@ class MobileControls extends FlxSpriteGroup
 
 		return virtualPad;
 	}
+	public static function mobileControlsPressed(buttonID:FlxMobileControlsID){
+		switch (getMode()) {
+			case 0 | 1 | 2 | 3:
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.LEFT:
+					return virtualpad.buttonLeft.pressed;
+				case FlxMobileControlsID.UP:
+					return virtualpad.buttonUp.pressed;
+				case FlxMobileControlsID.RIGHT:
+					return virtualpad.buttonRight.pressed;
+				case FlxMobileControlsID.DOWN:
+					return virtualpad.buttonDown.pressed;
+				case FlxMobileControlsID.LEFT2:
+					return virtualpad.buttonLeft2.pressed;
+				case FlxMobileControlsID.UP2:
+					return virtualpad.buttonUp2.pressed;
+				case FlxMobileControlsID.RIGHT2:
+					return virtualpad.buttonRight2.pressed;
+				case FlxMobileControlsID.DOWN2:
+					return virtualpad.buttonDown2.pressed;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+			case 4:
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.hitboxLEFT:
+					return hitbox.buttonLeft.pressed;
+				case FlxMobileControlsID.hitboxUP:
+					return hitbox.buttonUp.pressed;
+				case FlxMobileControlsID.hitboxRIGHT:
+					return hitbox.buttonRight.pressed;
+				case FlxMobileControlsID.hitboxDOWN:
+					return htibox.buttonDown.pressed;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+			case 5: //none
+		}
+	}
+	public static function mobileControlsJustPressed(buttonID:FlxMobileControlsID){
+		switch (getMode()) {
+			case 0 | 1 | 2 | 3:
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.LEFT:
+					return virtualpad.buttonLeft.justPressed;
+				case FlxMobileControlsID.UP:
+					return virtualpad.buttonUp.justPressed;
+				case FlxMobileControlsID.RIGHT:
+					return virtualpad.buttonRight.justPressed;
+				case FlxMobileControlsID.DOWN:
+					return virtualpad.buttonDown.justPressed;
+				case FlxMobileControlsID.LEFT2:
+					return virtualpad.buttonLeft2.justPressed;
+				case FlxMobileControlsID.UP2:
+					return virtualpad.buttonUp2.justPressed;
+				case FlxMobileControlsID.RIGHT2:
+					return virtualpad.buttonRight2.justPressed;
+				case FlxMobileControlsID.DOWN2:
+					return virtualpad.buttonDown2.justPressed;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+			case 4:
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.hitboxLEFT:
+					return hitbox.buttonLeft.justPressed;
+				case FlxMobileControlsID.hitboxUP:
+					return hitbox.buttonUp.justPressed;
+				case FlxMobileControlsID.hitboxRIGHT:
+					return hitbox.buttonRight.justPressed;
+				case FlxMobileControlsID.hitboxDOWN:
+					return hitbox.buttonDown.justPressed;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+			case 5: //none
+		}
+	}
+	public static function mobileControlsJustReleased(buttonID:FlxMobileControlsID){
+		switch (getMode()) {
+			case 0 | 1 | 2 | 3:
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.LEFT:
+					return virtualpad.buttonLeft.justReleased;
+				case FlxMobileControlsID.UP:
+					return virtualpad.buttonUp.justReleased;
+				case FlxMobileControlsID.RIGHT:
+					return virtualpad.buttonRight.justReleased;
+				case FlxMobileControlsID.DOWN:
+					return virtualpad.buttonDown.justReleased;
+				case FlxMobileControlsID.LEFT2:
+					return virtualpad.buttonLeft2.justReleased;
+				case FlxMobileControlsID.UP2:
+					return virtualpad.buttonUp2.justReleased;
+				case FlxMobileControlsID.RIGHT2:
+					return virtualpad.buttonRight2.justReleased;
+				case FlxMobileControlsID.DOWN2:
+					return virtualpad.buttonDown2.justReleased;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+			case 4:
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.hitboxLEFT:
+					return hitbox.buttonLeft.justReleased;
+				case FlxMobileControlsID.hitboxUP:
+					return hitbox.buttonUp.justReleased;
+				case FlxMobileControlsID.hitboxRIGHT:
+					return hitbox.buttonRight.justReleased;
+				case FlxMobileControlsID.hitboxDOWN:
+					return hitbox.buttonDown.justReleased;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+			case 5: //none
+		}
+	}
+		
 }
