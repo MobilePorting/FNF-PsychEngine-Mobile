@@ -286,7 +286,7 @@ class Controls
 					continue;
 
 				final virt = state.instance.mobileControls.virtualPad.mobileControlsPressed(key);
-				final hit = state.instance.hitbox.virtualPad.mobileControlsPressed(key); // kewl
+				final hit = state.instance.mobileControls.hitbox.mobileControlsPressed(key); // kewl
 				return controllerMode = (virt) ? virt : (hit) ? hit : false;
 			}
 		}
@@ -304,7 +304,7 @@ class Controls
 					continue;
 
 				final virt = state.instance.mobileControls.virtualPad.mobileControlsJustPressed(key);
-				final hit = state.instance.hitbox.virtualPad.mobileControlsJustPressed(key); // kewl
+				final hit = state.instance.mobileControls.hitbox.mobileControlsJustPressed(key); // kewl
 				return controllerMode = (virt) ? virt : (hit) ? hit : false;
 			}
 		}
@@ -322,7 +322,7 @@ class Controls
 					continue;
 
 				final virt = state.instance.mobileControls.virtualPad.mobileControlsJustReleased(key);
-				final hit = state.instance.hitbox.virtualPad.mobileControlsJustReleased(key); // kewl
+				final hit = state.instance.mobileControls.hitbox.mobileControlsJustReleased(key); // kewl
 				return controllerMode = (virt) ? virt : (hit) ? hit : false;
 			}
 		}
