@@ -184,7 +184,7 @@ class MobileControls extends FlxSpriteGroup
 				case FlxMobileControlsID.hitboxRIGHT:
 					return hitbox.buttonRight.pressed;
 				case FlxMobileControlsID.hitboxDOWN:
-					return htibox.buttonDown.pressed;
+					return hitbox.buttonDown.pressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
