@@ -285,9 +285,10 @@ class Controls
 				if (MobileControls.getMode() == 5)
 					continue;
 
-				final virt = state.instance.mobileControls.virtualPad.mobileControlsPressed(key);
-				final hit = state.instance.mobileControls.hitbox.mobileControlsPressed(key); // kewl
-				return controllerMode = (virt) ? virt : (hit) ? hit : false;
+				//final virt = state.instance.mobileControls.virtualPad.mobileControlsPressed(key);
+				//final hit = state.instance.mobileControls.hitbox.mobileControlsPressed(key); // kewl
+				controllerMode = true;
+				return state.instance.mobileControls.mobileControlsPressed(key);
 			}
 		}
 		return false;
@@ -303,9 +304,10 @@ class Controls
 				if (MobileControls.getMode() == 5)
 					continue;
 
-				final virt = state.instance.mobileControls.virtualPad.mobileControlsJustPressed(key);
-				final hit = state.instance.mobileControls.hitbox.mobileControlsJustPressed(key); // kewl
-				return controllerMode = (virt) ? virt : (hit) ? hit : false;
+				//final virt = state.instance.mobileControls.virtualPad.mobileControlsJustPressed(key);
+				//final hit = state.instance.mobileControls.hitbox.mobileControlsJustPressed(key); // kewl
+				controllerMode = true;
+				return state.instance.mobileControls.mobileControlsJustPressed(key);
 			}
 		}
 		return false;
@@ -321,9 +323,10 @@ class Controls
 				if (MobileControls.getMode() == 5)
 					continue;
 
-				final virt = state.instance.mobileControls.virtualPad.mobileControlsJustReleased(key);
-				final hit = state.instance.mobileControls.hitbox.mobileControlsJustReleased(key); // kewl
-				return controllerMode = (virt) ? virt : (hit) ? hit : false;
+				//final virt = state.instance.mobileControls.virtualPad.mobileControlsJustReleased(key);
+				//final hit = state.instance.mobileControls.hitbox.mobileControlsJustReleased(key); // kewl
+				controllerMode = true;
+				return state.instance.mobileControls.mobileControlsJustReleased(key);
 			}
 		}
 		return false;
