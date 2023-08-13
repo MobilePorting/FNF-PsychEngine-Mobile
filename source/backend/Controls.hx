@@ -280,7 +280,7 @@ class Controls
 		// awesome
 		final state:Dynamic = isInSubstate ? MusicBeatState : MusicBeatSubstate;
 
-		if (keys != null && state != null){
+		if (keys != null && state != null && state.instance.mobileControls != null){
 			for (key in keys){
 				if (MobileControls.getMode() == 5)
 					continue;
@@ -299,7 +299,7 @@ class Controls
 		// awesome
 		final state:Dynamic = isInSubstate ? MusicBeatState : MusicBeatSubstate;
 
-		if (keys != null && state != null){
+		if (keys != null && state != null && state.instance.mobileControls != null){
 			for (key in keys){
 				if (MobileControls.getMode() == 5)
 					continue;
@@ -318,7 +318,7 @@ class Controls
 		// awesome
 		final state:Dynamic = isInSubstate ? MusicBeatState : MusicBeatSubstate;
 
-		if (keys != null && state != null){
+		if (keys != null && state != null && state.instance.mobileControls != null){
 			for (key in keys){
 				if (MobileControls.getMode() == 5)
 					continue;
