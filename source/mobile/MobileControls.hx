@@ -148,27 +148,27 @@ class MobileControls extends FlxSpriteGroup
 
 		return virtualPad;
 	}
-	public static function mobileControlsPressed(buttonID:FlxMobileControlsID){
+	public function mobileControlsPressed(buttonID:FlxMobileControlsID){
 		switch (getMode()) {
 			case 0 | 1 | 2 | 3:
 			switch (buttonID)
 			{
 				case FlxMobileControlsID.LEFT:
-					return virtualpad.buttonLeft.pressed;
+					return virtualPad.buttonLeft.pressed;
 				case FlxMobileControlsID.UP:
-					return virtualpad.buttonUp.pressed;
+					return virtualPad.buttonUp.pressed;
 				case FlxMobileControlsID.RIGHT:
-					return virtualpad.buttonRight.pressed;
+					return virtualPad.buttonRight.pressed;
 				case FlxMobileControlsID.DOWN:
-					return virtualpad.buttonDown.pressed;
+					return virtualPad.buttonDown.pressed;
 				case FlxMobileControlsID.LEFT2:
-					return virtualpad.buttonLeft2.pressed;
+					return virtualPad.buttonLeft2.pressed;
 				case FlxMobileControlsID.UP2:
-					return virtualpad.buttonUp2.pressed;
+					return virtualPad.buttonUp2.pressed;
 				case FlxMobileControlsID.RIGHT2:
-					return virtualpad.buttonRight2.pressed;
+					return virtualPad.buttonRight2.pressed;
 				case FlxMobileControlsID.DOWN2:
-					return virtualpad.buttonDown2.pressed;
+					return virtualPad.buttonDown2.pressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -192,28 +192,29 @@ class MobileControls extends FlxSpriteGroup
 			}
 			case 5: //none
 		}
+        return false;
 	}
-	public static function mobileControlsJustPressed(buttonID:FlxMobileControlsID){
+	public function mobileControlsJustPressed(buttonID:FlxMobileControlsID){
 		switch (getMode()) {
 			case 0 | 1 | 2 | 3:
 			switch (buttonID)
 			{
 				case FlxMobileControlsID.LEFT:
-					return virtualpad.buttonLeft.justPressed;
+					return virtualPad.buttonLeft.justPressed;
 				case FlxMobileControlsID.UP:
-					return virtualpad.buttonUp.justPressed;
+					return virtualPad.buttonUp.justPressed;
 				case FlxMobileControlsID.RIGHT:
-					return virtualpad.buttonRight.justPressed;
+					return virtualPad.buttonRight.justPressed;
 				case FlxMobileControlsID.DOWN:
-					return virtualpad.buttonDown.justPressed;
+					return virtualPad.buttonDown.justPressed;
 				case FlxMobileControlsID.LEFT2:
-					return virtualpad.buttonLeft2.justPressed;
+					return virtualPad.buttonLeft2.justPressed;
 				case FlxMobileControlsID.UP2:
-					return virtualpad.buttonUp2.justPressed;
+					return virtualPad.buttonUp2.justPressed;
 				case FlxMobileControlsID.RIGHT2:
-					return virtualpad.buttonRight2.justPressed;
+					return virtualPad.buttonRight2.justPressed;
 				case FlxMobileControlsID.DOWN2:
-					return virtualpad.buttonDown2.justPressed;
+					return virtualPad.buttonDown2.justPressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -237,28 +238,29 @@ class MobileControls extends FlxSpriteGroup
 			}
 			case 5: //none
 		}
+        return false;
 	}
-	public static function mobileControlsJustReleased(buttonID:FlxMobileControlsID){
+	public function mobileControlsJustReleased(buttonID:FlxMobileControlsID){
 		switch (getMode()) {
 			case 0 | 1 | 2 | 3:
 			switch (buttonID)
 			{
 				case FlxMobileControlsID.LEFT:
-					return virtualpad.buttonLeft.justReleased;
+					return virtualPad.buttonLeft.justReleased;
 				case FlxMobileControlsID.UP:
-					return virtualpad.buttonUp.justReleased;
+					return virtualPad.buttonUp.justReleased;
 				case FlxMobileControlsID.RIGHT:
-					return virtualpad.buttonRight.justReleased;
+					return virtualPad.buttonRight.justReleased;
 				case FlxMobileControlsID.DOWN:
-					return virtualpad.buttonDown.justReleased;
+					return virtualPad.buttonDown.justReleased;
 				case FlxMobileControlsID.LEFT2:
-					return virtualpad.buttonLeft2.justReleased;
+					return virtualPad.buttonLeft2.justReleased;
 				case FlxMobileControlsID.UP2:
-					return virtualpad.buttonUp2.justReleased;
+					return virtualPad.buttonUp2.justReleased;
 				case FlxMobileControlsID.RIGHT2:
-					return virtualpad.buttonRight2.justReleased;
+					return virtualPad.buttonRight2.justReleased;
 				case FlxMobileControlsID.DOWN2:
-					return virtualpad.buttonDown2.justReleased;
+					return virtualPad.buttonDown2.justReleased;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -282,6 +284,7 @@ class MobileControls extends FlxSpriteGroup
 			}
 			case 5: //none
 		}
+        return false;
 	}
 		
 }
