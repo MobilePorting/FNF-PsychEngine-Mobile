@@ -13,7 +13,7 @@ import substates.GameOverSubstate;
 class ReflectionFunctions
 {
 	public static function implement(funk:FunkinLua)
-	{
+		{
 		var lua:State = funk.lua;
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String, ?allowMaps:Bool = false) {
 			var split:Array<String> = variable.split('.');
@@ -121,8 +121,6 @@ class ReflectionFunctions
 			var groupOrArray:Dynamic = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 			if(Std.isOfType(groupOrArray, FlxTypedGroup)) {
 				var sex = groupOrArray.members[index];
-				if(!dontDestroy)
-					sex.kill();
 				groupOrArray.remove(sex, true);
 				if(!dontDestroy)
 					sex.destroy();

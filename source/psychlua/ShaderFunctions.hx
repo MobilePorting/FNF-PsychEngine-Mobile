@@ -1,20 +1,27 @@
 package psychlua;
 
 #if (!flash && sys)
+import openfl.filters.ShaderFilter;
 import flixel.addons.display.FlxRuntimeShader;
+#end
+#if !flash
+import shaders.CustomShaders;
 #end
 
 class ShaderFunctions
 {
-	public static function implement(funk:FunkinLua)
-	{
-		var lua = funk.lua;
-		// shader shit
-		funk.addLocalCallback("initLuaShader", function(name:String, ?glslVersion:Int = 120) {
+	#if (!flash && MODS_ALLOWED && sys)
+        private static var storedFilters:Map<String, ShaderFilter> = [];
+        #end
+		public static function implement(funk:FunkinLua)
+			{
+				var lua:State = funk.lua;
+				// shader shit
+		funk.addLocalCallback("initLuaShader", function(name:String) {
 			if(!ClientPrefs.data.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
-			return funk.initLuaShader(name, glslVersion);
+			return funk.initLuaShader(name);
 			#else
 			FunkinLua.luaTrace("initLuaShader: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
@@ -31,6 +38,63 @@ class ShaderFunctions
 				return false;
 			}
 
+			funk.addLocalCallback("addShaderToCam", function(cam:String, shader:String, ?index:String) {
+			if (!ClientPrefs.data.shaders) return false;
+
+			if (index == null || index.length < 1)
+			    index = shader;
+
+			#if (!flash && MODS_ALLOWED && sys)
+			if (!funk.runtimeShaders.exists(shader) && !funk.initLuaShader(shader)) {
+			    FunkinLua.luaTrace('addShaderToCam: Shader $shader is missing!', false, false, FlxColor.RED);
+			    return false;
+			}
+
+                        var arr:Array<String> = funk.runtimeShaders.get(shader);
+			// Both FlxGame and FlxCamera has a _filters array and a setFilters function
+			// We should maybe make an interface for that?
+                        var camera = getCam(cam);
+                        @:privateAccess {
+                                if (camera._filters == null)
+                                    camera._filters = [];
+
+                                var filter = new ShaderFilter(new FlxRuntimeShader(arr[0], arr[1]));
+                                storedFilters.set(index, filter);
+                                camera._filters.push(filter);
+                        }
+                        return true;
+			#else
+                        FunkinLua.luaTrace("addShaderToCam: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
+			#end
+			return false;
+		});
+
+                funk.addLocalCallback("removeCamShader", function(cam:String, shader:String) {
+                        #if (!flash && MODS_ALLOWED && sys)
+                        var camera = getCam(cam);
+                        @:privateAccess {
+                                if (!storedFilters.exists(shader)) {
+                                        FunkinLua.luaTrace('removeCamShader: $shader does not exist!', false, false, FlxColor.YELLOW);
+                                        return false;
+                                }
+
+                                if (camera._filters == null) {
+                                        FunkinLua.luaTrace('removeCamShader: camera $cam does not have any shaders!', false, false, FlxColor.YELLOW);
+                                        return false;
+                                }
+
+                                camera._filters.remove(storedFilters.get(shader));
+                                storedFilters.remove(shader);
+                                return true;
+                        }
+                        #else
+                        FunkinLua.luaTrace('removeCamShader: Platform unsupported for Runtime Shaders!', false, false, FlxColor.RED);
+                        #end
+                        return false;
+                });
+
+                funk.addLocalCallback("clearCamShaders", function(cam:String) getCam(cam).setFilters([]));
+
 			var split:Array<String> = obj.split('.');
 			var leObj:FlxSprite = LuaUtils.getObjectDirectly(split[0]);
 			if(split.length > 1) {
@@ -46,6 +110,7 @@ class ShaderFunctions
 			FunkinLua.luaTrace("setSpriteShader: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
 			return false;
+
 		});
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
 			var split:Array<String> = obj.split('.');
@@ -60,7 +125,6 @@ class ShaderFunctions
 			}
 			return false;
 		});
-
 
 		Lua_helper.add_callback(lua, "getShaderBool", function(obj:String, prop:String) {
 			#if (!flash && MODS_ALLOWED && sys)
@@ -263,11 +327,88 @@ class ShaderFunctions
 			return false;
 			#end
 		});
+
+                // SHADER SHIT
+                #if !flash
+                Lua_helper.add_callback(lua, "addChromaticAbberationEffect", function(camera:String,chromeOffset:Float = 0.005) {
+
+                        PlayState.instance.addShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
+
+                });
+
+                Lua_helper.add_callback(lua, "addScanlineEffect", function(camera:String,lockAlpha:Bool=false) {
+
+                        PlayState.instance.addShaderToCamera(camera, new ScanlineEffect(lockAlpha));
+
+                });
+                Lua_helper.add_callback(lua, "addGrainEffect", function(camera:String,grainSize:Float,lumAmount:Float,lockAlpha:Bool=false) {
+
+                        PlayState.instance.addShaderToCamera(camera, new GrainEffect(grainSize,lumAmount,lockAlpha));
+
+                });
+                Lua_helper.add_callback(lua, "addTiltshiftEffect", function(camera:String,blurAmount:Float,center:Float) {
+
+                        PlayState.instance.addShaderToCamera(camera, new TiltshiftEffect(blurAmount,center));
+
+                });
+                Lua_helper.add_callback(lua, "addVCREffect", function(camera:String,glitchFactor:Float = 0.0,distortion:Bool=true,perspectiveOn:Bool=true,vignetteMoving:Bool=true) {
+
+                        PlayState.instance.addShaderToCamera(camera, new VCRDistortionEffect(glitchFactor,distortion,perspectiveOn,vignetteMoving));
+
+                });
+
+                Lua_helper.add_callback(lua, "addGlitchEffect", function(camera:String,waveSpeed:Float = 0.1,waveFrq:Float = 0.1,waveAmp:Float = 0.1) {
+
+                        PlayState.instance.addShaderToCamera(camera, new GlitchEffect(waveSpeed,waveFrq,waveAmp));
+
+                });
+                Lua_helper.add_callback(lua, "addPulseEffect", function(camera:String,waveSpeed:Float = 0.1,waveFrq:Float = 0.1,waveAmp:Float = 0.1) {
+
+                        PlayState.instance.addShaderToCamera(camera, new PulseEffect(waveSpeed,waveFrq,waveAmp));
+
+                });
+                Lua_helper.add_callback(lua, "addDistortionEffect", function(camera:String,waveSpeed:Float = 0.1,waveFrq:Float = 0.1,waveAmp:Float = 0.1) {
+
+                        PlayState.instance.addShaderToCamera(camera, new DistortBGEffect(waveSpeed,waveFrq,waveAmp));
+
+                });
+                Lua_helper.add_callback(lua, "addInvertEffect", function(camera:String,lockAlpha:Bool=false) {
+
+                        PlayState.instance.addShaderToCamera(camera, new InvertColorsEffect(lockAlpha));
+
+                });
+                Lua_helper.add_callback(lua, "addGreyscaleEffect", function(camera:String) { //for dem funkies
+
+                        PlayState.instance.addShaderToCamera(camera, new GreyscaleEffect());
+
+                });
+                Lua_helper.add_callback(lua, "addGrayscaleEffect", function(camera:String) { //for dem funkies
+
+                        PlayState.instance.addShaderToCamera(camera, new GreyscaleEffect());
+
+                });
+                Lua_helper.add_callback(lua, "add3DEffect", function(camera:String,xrotation:Float=0,yrotation:Float=0,zrotation:Float=0,depth:Float=0) { //for dem funkies
+
+                        PlayState.instance.addShaderToCamera(camera, new ThreeDEffect(xrotation,yrotation,zrotation,depth));
+
+                });
+                Lua_helper.add_callback(lua, "addBloomEffect", function(camera:String,intensity:Float = 0.35,blurSize:Float=1.0) {
+
+                        PlayState.instance.addShaderToCamera(camera, new BloomEffect(blurSize/512.0,intensity));
+
+                });
+                Lua_helper.add_callback(lua, "clearEffects", function(camera:String) {
+                        PlayState.instance.clearShaderFromCamera(camera);
+                });
+                #end
 	}
 	
 	#if (!flash && sys)
 	public static function getShader(obj:String):FlxRuntimeShader
 	{
+		if (storedFilters.exists(obj))
+		    return cast (storedFilters[obj].shader, FlxRuntimeShader);
+
 		var split:Array<String> = obj.split('.');
 		var target:FlxSprite = null;
 		if(split.length > 1) target = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
@@ -280,5 +421,11 @@ class ShaderFunctions
 		}
 		return cast (target.shader, FlxRuntimeShader);
 	}
+
+	public static function getCam(obj:String):Dynamic {
+               	if (obj.toLowerCase().trim() == "global")
+		    return FlxG.game;
+	        return LuaUtils.cameraFromString(obj);
+        }
 	#end
 }

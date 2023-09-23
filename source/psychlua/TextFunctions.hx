@@ -3,8 +3,8 @@ package psychlua;
 class TextFunctions
 {
 	public static function implement(funk:FunkinLua)
-	{
-		var lua = funk.lua;
+		{
+		var lua:State = funk.lua;
 		var game:PlayState = PlayState.instance;
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
 			tag = tag.replace('.', '');
@@ -161,10 +161,6 @@ class TextFunctions
 			}
 
 			var pee:FlxText = game.modchartTexts.get(tag);
-			if(destroy) {
-				pee.kill();
-			}
-
 			LuaUtils.getTargetInstance().remove(pee, true);
 			if(destroy) {
 				pee.destroy();

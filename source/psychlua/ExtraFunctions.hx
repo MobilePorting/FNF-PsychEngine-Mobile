@@ -1,5 +1,12 @@
 package psychlua;
 
+#if mobileC
+import mobile.MobileControls;
+#end
+#if mobile
+import extension.eightsines.EsOrientation;
+#end
+import lime.ui.Haptic;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -15,34 +22,33 @@ import openfl.utils.Assets;
 class ExtraFunctions
 {
 	public static function implement(funk:FunkinLua)
-	{
+		{
 		var lua:State = funk.lua;
-		
 		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justPressed, name);
+			return Reflect.getProperty(FlxG.keys.justPressed, name.toUpperCase());
 		});
 		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.pressed, name);
+			return Reflect.getProperty(FlxG.keys.pressed, name.toUpperCase());
 		});
 		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justReleased, name);
+			return Reflect.getProperty(FlxG.keys.justReleased, name.toUpperCase());
 		});
 
 		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
 		{
-			return FlxG.gamepads.anyJustPressed(name);
+			return FlxG.gamepads.anyJustPressed(name.toUpperCase());
 		});
 		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
 		{
-			return FlxG.gamepads.anyPressed(name);
+			return FlxG.gamepads.anyPressed(name.toUpperCase());
 		});
 		Lua_helper.add_callback(lua, "anyGamepadReleased", function(name:String)
 		{
-			return FlxG.gamepads.anyJustReleased(name);
+			return FlxG.gamepads.anyJustReleased(name.toUpperCase());
 		});
 
 		Lua_helper.add_callback(lua, "gamepadAnalogX", function(id:Int, ?leftStick:Bool = true)
@@ -70,7 +76,7 @@ class ExtraFunctions
 			{
 				return false;
 			}
-			return Reflect.getProperty(controller.justPressed, name) == true;
+			return Reflect.getProperty(controller.justPressed, name.toUpperCase()) == true;
 		});
 		Lua_helper.add_callback(lua, "gamepadPressed", function(id:Int, name:String)
 		{
@@ -79,7 +85,7 @@ class ExtraFunctions
 			{
 				return false;
 			}
-			return Reflect.getProperty(controller.pressed, name) == true;
+			return Reflect.getProperty(controller.pressed, name.toUpperCase()) == true;
 		});
 		Lua_helper.add_callback(lua, "gamepadReleased", function(id:Int, name:String)
 		{
@@ -88,7 +94,7 @@ class ExtraFunctions
 			{
 				return false;
 			}
-			return Reflect.getProperty(controller.justReleased, name) == true;
+			return Reflect.getProperty(controller.justReleased, name.toUpperCase()) == true;
 		});
 
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String = '') {
@@ -124,6 +130,121 @@ class ExtraFunctions
 			}
 			return false;
 		});
+		#if mobileC
+		Lua_helper.add_callback(lua, "extraButtonPressed", function(button:String) {
+			button = button.toLowerCase();
+			switch (mobile.MobileControls.getMode()){
+				case 0 | 1 | 2 | 3:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.pressed;
+			case 'second':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra1.pressed;
+			default:
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.pressed;
+			}
+				case 4:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
+				case 'second':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra1.pressed;
+				default:
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
+				}
+		}
+			return false;
+		});
+
+		Lua_helper.add_callback(lua, "extraButtonJustPressed", function(button:String) {
+			button = button.toLowerCase();
+			switch (mobile.MobileControls.getMode()){
+				case 0 | 1 | 2 | 3:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justPressed;
+			case 'second':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra1.justPressed;
+			default:
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justPressed;
+			}
+				case 4:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justPressed;
+				case 'second':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra1.justPressed;
+				default:
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justPressed;
+				}
+		}
+			return false;
+		});
+
+		Lua_helper.add_callback(lua, "extraButtonJustReleased", function(button:String) {
+			button = button.toLowerCase();
+			switch (mobile.MobileControls.getMode()){
+				case 0 | 1 | 2 | 3:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justReleased;
+			case 'second':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra1.justReleased;
+			default:
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justReleased;
+			}
+				case 4:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
+				case 'second':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra1.justReleased;
+				default:
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
+				}
+		}
+			return false;
+		});
+                #end
+
+		Lua_helper.add_callback(lua, "vibrate", function(duration:Null<Int>, ?period:Null<Int>){
+		    if (period == null) period = 0;
+		    if (duration == null) return FunkinLua.luaTrace('vibrate: No duration specified.');
+		    return Haptic.vibrate(period, duration);
+		});
+
+		#if mobile
+		Lua_helper.add_callback(lua, "changeOrientation", function(orientation:String){
+		    if (orientation != null) {
+			switch (orientation){
+				case 'portrait':
+					return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
+				case 'landspace':
+					return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
+				case 'auto':
+					return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
+			}}
+			return FunkinLua.luaTrace('changeOrientation: No orientation specified.');
+		});
+		#end
 
 		// Save data management
 		Lua_helper.add_callback(lua, "initSaveData", function(name:String, ?folder:String = 'psychenginemods') {
@@ -230,9 +351,7 @@ class ExtraFunctions
 			}
 			return false;
 		});
-		Lua_helper.add_callback(lua, "getTextFromFile", function(path:String, ?ignoreModFolders:Bool = false) {
-			return Paths.getTextFromFile(path, ignoreModFolders);
-		});
+		Lua_helper.add_callback(lua, "getTextFromFile", Paths.getTextFromFile);
 		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
 			var list:Array<String> = [];
 			#if sys
@@ -248,18 +367,12 @@ class ExtraFunctions
 		});
 
 		// String tools
-		Lua_helper.add_callback(lua, "stringStartsWith", function(str:String, start:String) {
-			return str.startsWith(start);
-		});
-		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
-			return str.endsWith(end);
-		});
+		Lua_helper.add_callback(lua, "stringStartsWith", StringTools.startsWith);
+		Lua_helper.add_callback(lua, "stringEndsWith", StringTools.endsWith);
 		Lua_helper.add_callback(lua, "stringSplit", function(str:String, split:String) {
 			return str.split(split);
 		});
-		Lua_helper.add_callback(lua, "stringTrim", function(str:String) {
-			return str.trim();
-		});
+		Lua_helper.add_callback(lua, "stringTrim", StringTools.trim);
 
 		// Randomization
 		Lua_helper.add_callback(lua, "getRandomInt", function(min:Int, max:Int = FlxMath.MAX_VALUE_INT, exclude:String = '') {
@@ -280,8 +393,6 @@ class ExtraFunctions
 			}
 			return FlxG.random.float(min, max, toExclude);
 		});
-		Lua_helper.add_callback(lua, "getRandomBool", function(chance:Float = 50) {
-			return FlxG.random.bool(chance);
-		});
+		Lua_helper.add_callback(lua, "getRandomBool", FlxG.random.bool);
 	}
 }
