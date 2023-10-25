@@ -135,7 +135,7 @@ class Controls
 		return justPressed('accept');
 
 	private function get_BACK()
-		return justPressed('back');
+		return justPressed('back') #if android || FlxG.android.justReleased.BACK #end;
 
 	private function get_PAUSE()
 		return justPressed('pause');
