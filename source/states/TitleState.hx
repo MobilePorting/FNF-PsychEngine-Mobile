@@ -550,9 +550,10 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					createCoolText(['Inkink Funker by'], 40);
+					createCoolText(['Psych Engine by'], 40);
 				case 4:
-					addMoreText('InkingBird', 40);
+					addMoreText('Shadow Mario', 40);
+					addMoreText('Riveren', 40);
 				case 5:
 					deleteCoolText();
 				case 6:
@@ -569,12 +570,12 @@ class TitleState extends MusicBeatState
 					addMoreText(curWacky[1]);
 				case 13:
 					deleteCoolText();
-						case 14:
+				case 14:
 					addMoreText('FNF');
 				case 15:
-					addMoreText('Inking);
+					addMoreText('Inking');
 				case 16:
-					addMoreText('Funker!'); // credTextShit.text += '\nFunkin';
+					addMoreText('Funker'); // credTextShit.text += '\nFunkin';
 
 				case 17:
 					skipIntro();
@@ -608,7 +609,7 @@ class TitleState extends MusicBeatState
 					default: //Go back to normal ugly ass boring GF
 						remove(ngSpr);
 						remove(credGroup);
-						FlxG.camera.flash(FlxColor.White, 2);
+						FlxG.camera.flash(FlxColor.WHITE, 2);
 						skippedIntro = true;
 						playJingle = false;
 
