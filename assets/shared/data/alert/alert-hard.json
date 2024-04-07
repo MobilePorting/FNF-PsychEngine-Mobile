@@ -11511,7 +11511,7 @@
 		],
 		"player2": "bendy",
 		"player3": null,
-		"disableNoteRGB": true,
+		"disableNoteRGB": false,
 		"splashSkin": "noteSplashes",
 		"song": "Alert",
 		"needsVoices": true,
