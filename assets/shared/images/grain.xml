@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="grain.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="grain0000" x="0" y="0" width="1024" height="580"/>
+	<SubTexture name="grain0001" x="0" y="587" width="1024" height="580"/>
+	<SubTexture name="grain0002" x="0" y="1174" width="1024" height="580"/>
+	<SubTexture name="grain0003" x="0" y="1762" width="1024" height="580"/>
+	<SubTexture name="grain0004" x="0" y="2349" width="1024" height="580"/>
+	<SubTexture name="grain0005" x="0" y="2937" width="1024" height="580"/>
+	<SubTexture name="grain0006" x="0" y="3524" width="1024" height="580"/>
+	<SubTexture name="grain0007" x="0" y="4112" width="1024" height="580"/>
+	<SubTexture name="grain0008" x="0" y="4699" width="1024" height="580"/>
+	<SubTexture name="grain0009" x="0" y="5286" width="1024" height="580"/>
+	<SubTexture name="grain0010" x="0" y="5874" width="1024" height="580"/>
+	<SubTexture name="grain0011" x="0" y="6461" width="1024" height="580"/>
+	<SubTexture name="grain0012" x="0" y="7049" width="1024" height="580"/>
+	<SubTexture name="grain0013" x="0" y="7636" width="1024" height="580"/>
+	<SubTexture name="grain0014" x="0" y="8224" width="1024" height="580"/>
+	<SubTexture name="grain0015" x="0" y="8811" width="1024" height="580"/>
+	<SubTexture name="grain0016" x="0" y="9398" width="1024" height="580"/>
+	<SubTexture name="grain0017" x="0" y="9986" width="1024" height="580"/>
+	<SubTexture name="grain0018" x="0" y="10573" width="1024" height="580"/>
+	<SubTexture name="grain0019" x="0" y="11161" width="1024" height="580"/>
+	<SubTexture name="grain0020" x="0" y="11752" width="1024" height="580"/>
+</TextureAtlas>

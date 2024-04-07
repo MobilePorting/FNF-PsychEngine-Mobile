@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+-->
+<TextureAtlas imagePath="Yessir.png" width="6000" height="1350">
+  <SubTexture name="bgstage0000" x="0" y="0"  width="2000" height="1350" frameX="-0" frameY="-0" frameWidth="2000" frameHeight="1350"/>
+  <SubTexture name="bgstage0001" x="2000" y="0"  width="2000" height="1350" frameX="-0" frameY="-0" frameWidth="2000" frameHeight="1350"/>
+  <SubTexture name="bgstage0002" x="4000" y="0"  width="2000" height="1350" frameX="-0" frameY="-0" frameWidth="2000" frameHeight="1350"/>
+</TextureAtlas>
