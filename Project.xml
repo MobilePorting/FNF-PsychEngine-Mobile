@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Psych Engine" file="InkingFunker" packageName="com.azd4rk.inkingfunk" package="com.azd4rk.inkingfunk" main="Main" version="0.2.8" company="ShadowMario" />
+	<app title="Friday Night Funkin' PE" file="InkingFunker" packageName="com.inkingfunker.azd4rk" package="com.inkingfunker.azd4rk" main="Main" version="0.2.8" company="InkingBird" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -29,7 +29,7 @@
 	<define name="SHOW_LOADING_SCREEN" />
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE THE PSYCH LOGO FROM LOADING SCREEN -->
 	<define name="VIDEOS_ALLOWED" if="desktop || mobile" unless="32bits || hl || NOVIDEO || rpi"/> <!-- i'll keep this cuz it makes vscode think i don't use videos -->
-	<define name="ADVANCED_VIDEO_FUNCTIONS" if="VIDEOS_ALLOWED android"/>
+	<define name="ADVANCED_VIDEO_FUNCTIONS" if="VIDEOS_ALLOWED"/>
         <define name="CUSTOM_SHADERS_ALLOWED" if="LUA_ALLOWED"/>
 
 	<section if="officialBuild">
@@ -113,8 +113,8 @@
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
-	<haxelib name="hxvlc" if="VIDEOS_ALLOWED" unless="ADVANCED_VIDEO_FUNCTIONS"/>
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED ADVANCED_VIDEO_FUNCTIONS"/>
+	<!--<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>-->
+	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate" unless="html5"/>
 	<haxelib name="tjson"/>
@@ -186,18 +186,14 @@
 
 			<!--Target SDK-->
 			<android target-sdk-version="29" if="EXTERNAL || MEDIA"/>
-			
-			<config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE" if="EXTERNAL || MEDIA"/>
 
-			<!-- Fix Networking -->
-			<config:android permission="android.permission.INTERNET" />
-			<config:android permission="android.permission.ACCESS_NETWORK_STATE" />
+            <config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE" if="EXTERNAL || MEDIA"/>
 		</section>
 
-		<!--<section if="ios">
+		<section if="ios">
 			<define name='objc' />
 			<ios linker-flags='-ObjC' />
-		</section>-->
+		</section>
 
 	<!--Avoid memory leaks with for loops in HScript-->
 	<haxedef name="loop_unroll_max_cost" value="25" />
