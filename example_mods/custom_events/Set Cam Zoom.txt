@@ -1,0 +1,6 @@
+Sets Camera Zoom
+
+Value 1: Cam zoom
+
+Value 2: if blank, it will smoothly zoom regularly,
+otherwise it will do an instant zoom
