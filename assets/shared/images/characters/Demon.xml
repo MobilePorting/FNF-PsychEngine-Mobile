@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+-->
+<TextureAtlas imagePath="Demon.png" width="5961" height="1688">
+  <SubTexture name="down0000" x="0" y="0"  width="665" height="619" frameX="-113" frameY="-398" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="down0001" x="665" y="0"  width="685" height="656" frameX="-98" frameY="-363" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="right0000" x="1350" y="0"  width="838" height="800" frameX="-79" frameY="-223" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="right0001" x="2188" y="0"  width="818" height="800" frameX="-74" frameY="-223" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="left0000" x="3006" y="0"  width="684" height="804" frameX="-0" frameY="-217" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="left0001" x="3690" y="0"  width="657" height="806" frameX="-7" frameY="-215" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="idle0001" x="4347" y="0"  width="520" height="818" frameX="-207" frameY="-203" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="idle0002" x="4867" y="0"  width="531" height="843" frameX="-187" frameY="-178" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="idle0003" x="5398" y="0"  width="563" height="855" frameX="-169" frameY="-166" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="idle0000" x="0" y="619"  width="605" height="868" frameX="-126" frameY="-153" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="up0001" x="605" y="656"  width="601" height="870" frameX="-103" frameY="-151" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="up0000" x="1206" y="800"  width="612" height="888" frameX="-93" frameY="-133" frameWidth="1000" frameHeight="1100"/>
+  <SubTexture name="idle0004" x="0" y="619"  width="605" height="868" frameX="-126" frameY="-153" frameWidth="1000" frameHeight="1100"/>
+</TextureAtlas>
