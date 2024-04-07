@@ -17,6 +17,7 @@ import openfl.display.BitmapData;
 
 import shaders.ColorSwap;
 
+import states.StoryMenuState;
 import states.OutdatedState;
 import states.MainMenuState;
 #if mobile
@@ -550,32 +551,32 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					createCoolText(['Inkink Funker by'], 40);
-				case 3:
-					addMoreText('InkingBird', 40);
 				case 4:
-					deleteCoolText();
+					addMoreText('InkingBird', 40);
 				case 5:
-					createCoolText(['Not associated', 'with'], -40);
+					deleteCoolText();
 				case 6:
+					createCoolText(['Not associated', 'with'], -40);
+				case 8:
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
-				case 7:
+				case 9:
 					deleteCoolText();
 					ngSpr.visible = false;
-				case 8:
-					createCoolText([curWacky[0]]);
-				case 9:
-					addMoreText(curWacky[1]);
 				case 10:
-					deleteCoolText();
-						case 11:
-					addMoreText('FNF');
+					createCoolText([curWacky[0]]);
 				case 12:
-					addMoreText('Inking);
+					addMoreText(curWacky[1]);
 				case 13:
+					deleteCoolText();
+						case 14:
+					addMoreText('FNF');
+				case 15:
+					addMoreText('Inking);
+				case 16:
 					addMoreText('Funker!'); // credTextShit.text += '\nFunkin';
 
-				case 14:
+				case 17:
 					skipIntro();
 			}
 		}
