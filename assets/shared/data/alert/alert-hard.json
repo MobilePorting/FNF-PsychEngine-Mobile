@@ -11515,7 +11515,7 @@
 		"splashSkin": "noteSplashes",
 		"song": "Alert",
 		"needsVoices": true,
-		"arrowSkin": "gray_NOTE",
+		"arrowSkin": "NOTE_assets",
 		"validScore": true,
 		"stage": "something",
 		"bpm": 158,
