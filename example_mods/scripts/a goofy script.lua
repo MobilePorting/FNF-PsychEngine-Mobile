@@ -122,9 +122,9 @@ end
        end
        
        function onUpdate()      
-    setTextFont('timeTxt', 'DK Black Bamboo.ttf');
-    setTextFont('botplayTxt', 'DK Black Bamboo.ttf');
-    setTextFont('scoreTxt', 'DK Black Bamboo.ttf');
+    setTextFont('timeTxt', 'DK-Black-Bamboo.ttf');
+    setTextFont('botplayTxt', 'DK-Black-Bamboo.ttf');
+    setTextFont('scoreTxt', 'DK-Black-Bamboo.ttf');
         end
        
        
