@@ -12,21 +12,21 @@
 	],
 	"hiddenUntilUnlocked": false,
 	"hideFreeplay": false,
-	"weekBackground": "stage",
+	"weekBackground": "inking",
 	"difficulties": "hard",
 	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
+		"",
+		"",
+		""
 	],
-	"storyName": "Your New Week",
-	"weekName": "Custom Week",
+	"storyName": "",
+	"weekName": "Bendy",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"hideStoryMode": true,
+	"hideStoryMode": false,
 	"weekBefore": "tutorial",
 	"startUnlocked": true
 }
