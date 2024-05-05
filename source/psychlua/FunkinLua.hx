@@ -555,22 +555,22 @@ class FunkinLua {
 			}
 		});
 
-		set("doTweenX", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
-			oldTweenFunction(tag, vars, {x: value}, duration, ease, 'doTweenX');
+		set("doTweenX", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, type:String) {
+			oldTweenFunction(tag, vars, {x: value}, duration, ease, type, 'doTweenX');
 		});
-		set("doTweenY", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
-			oldTweenFunction(tag, vars, {y: value}, duration, ease, 'doTweenY');
+		set("doTweenY", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, type:String) {
+			oldTweenFunction(tag, vars, {y: value}, duration, ease, type, 'doTweenY');
 		});
-		set("doTweenAngle", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
-			oldTweenFunction(tag, vars, {angle: value}, duration, ease, 'doTweenAngle');
+		set("doTweenAngle", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, type:String) {
+			oldTweenFunction(tag, vars, {angle: value}, duration, ease, type, 'doTweenAngle');
 		});
-		set("doTweenAlpha", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
-			oldTweenFunction(tag, vars, {alpha: value}, duration, ease, 'doTweenAlpha');
+		set("doTweenAlpha", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, type:String) {
+			oldTweenFunction(tag, vars, {alpha: value}, duration, ease, type, 'doTweenAlpha');
 		});
-		set("doTweenZoom", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
-			oldTweenFunction(tag, vars, {zoom: value}, duration, ease, 'doTweenZoom');
+		set("doTweenZoom", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, type:String) {
+			oldTweenFunction(tag, vars, {zoom: value}, duration, ease, type, 'doTweenZoom');
 		});
-		set("doTweenColor", function(tag:String, vars:String, targetColor:String, duration:Float, ease:String) {
+		set("doTweenColor", function(tag:String, vars:String, targetColor:String, duration:Float, ease:String, type:String) {
 			var penisExam:Dynamic = LuaUtils.tweenPrepare(tag, vars);
 			if(penisExam != null) {
 				var curColor:FlxColor = penisExam.color;
@@ -587,7 +587,7 @@ class FunkinLua {
 		});
 
 		//Tween shit, but for strums
-		set("noteTweenX", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+		set("noteTweenX", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String, type:String) {
 			LuaUtils.cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = game.strumLineNotes.members[note % game.strumLineNotes.length];
@@ -601,7 +601,7 @@ class FunkinLua {
 				}));
 			}
 		});
-		set("noteTweenY", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+		set("noteTweenY", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String, type:String) {
 			LuaUtils.cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = game.strumLineNotes.members[note % game.strumLineNotes.length];
@@ -615,7 +615,7 @@ class FunkinLua {
 				}));
 			}
 		});
-		set("noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+		set("noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String, type:String) {
 			LuaUtils.cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = game.strumLineNotes.members[note % game.strumLineNotes.length];
@@ -629,7 +629,7 @@ class FunkinLua {
 				}));
 			}
 		});
-		set("noteTweenDirection", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+		set("noteTweenDirection", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String, type:String) {
 			LuaUtils.cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = game.strumLineNotes.members[note % game.strumLineNotes.length];
@@ -677,7 +677,7 @@ class FunkinLua {
 			}
 			return released;
 		});
-		set("noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+		set("noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String, type:String) {
 			LuaUtils.cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = game.strumLineNotes.members[note % game.strumLineNotes.length];
@@ -691,7 +691,7 @@ class FunkinLua {
 				}));
 			}
 		});
-		set("noteTweenAlpha", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+		set("noteTweenAlpha", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String, type:String) {
 			LuaUtils.cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = game.strumLineNotes.members[note % game.strumLineNotes.length];
