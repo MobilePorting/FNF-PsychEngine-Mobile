@@ -364,6 +364,18 @@ class Paths
 		#end
 	}
 
+	public static function getAssetWithLibrary(file:String):String
+	{
+		if(file.contains(":")) file = file.split(":")[1];
+		
+		@:privateAccess
+		for(library in LimeAssets.libraries.keys()){
+			if(OpenflAssets.exists('$library:$file') && library != 'default')
+				return '$library:$file';
+		}
+		return file;
+	}
+
 	static public function getAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
 	{
 		var useMod = false;

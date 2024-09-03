@@ -54,7 +54,10 @@ class HScript extends SScript
 
 		this.varsToBring = varsToBring;
 	
-		super(file, false, false);
+		super(#if MODS_ALLOWED file #else '' #end, false, false);
+		#if !MODS_ALLOWED
+		doString(openfl.Assets.getText(file));
+		#end
 
 		#if LUA_ALLOWED
 		parentLua = parent;

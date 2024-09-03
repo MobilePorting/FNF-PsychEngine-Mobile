@@ -28,6 +28,9 @@ class SUtil
 		var daPath:String = '';
 
 		#if android
+		#if !MODS_ALLOWED
+		daPath =  AndroidContext.getExternalFilesDir(null);
+		#else
 		switch (type)
 		{
 			case EXTERNAL_DATA:
@@ -39,6 +42,7 @@ class SUtil
 			case MEDIA:
 				daPath = AndroidEnvironment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName');
 		}
+		#end
 		#elseif ios
 		daPath = LimeSystem.documentsDirectory;
 		#end

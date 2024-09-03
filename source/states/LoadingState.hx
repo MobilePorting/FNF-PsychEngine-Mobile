@@ -341,9 +341,10 @@ class LoadingState extends MusicBeatState
 				#if MODS_ALLOWED
 				var moddyFile:String = Paths.modsJson('$folder/preload');
 				if (FileSystem.exists(moddyFile)) json = Json.parse(File.getContent(moddyFile));
-				else json = Json.parse(File.getContent(path));
+				else if(Assets.exists(path)) json = Json.parse(File.getContent(path));
 				#else
-				json = Json.parse(Assets.getText(path));
+				if(Assets.exists(path))
+					json = Json.parse(Assets.getText(path));
 				#end
 
 				if (json != null)

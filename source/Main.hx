@@ -51,7 +51,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-        #if (android && EXTERNAL || MEDIA)
+        #if (android && MODS_ALLOWED && EXTERNAL || MEDIA)
         SUtil.doPermissionsShit();
         #end
         #if mobile
