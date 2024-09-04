@@ -1488,9 +1488,9 @@ class FunkinLua {
 		#if android AndroidFunctions.implement(this); #end
 
 		try{
+			var result:Dynamic = null;
 			#if MODS_ALLOWED
 			var isString:Bool = !FileSystem.exists(scriptName);
-			var result:Dynamic = null;
 			if(!isString)
 				result = LuaL.dofile(lua, scriptName);
 			else
