@@ -12,6 +12,7 @@ import openfl.system.System;
 import openfl.geom.Rectangle;
 import openfl.media.Sound;
 import haxe.Json;
+import lime.utils.Assets as LimeAssets;
 
 class Paths
 {
@@ -370,7 +371,7 @@ class Paths
 		
 		@:privateAccess
 		for(library in LimeAssets.libraries.keys()){
-			if(OpenflAssets.exists('$library:$file') && library != 'default')
+			if(openfl.Assets.exists('$library:$file') && library != 'default')
 				return '$library:$file';
 		}
 		return file;
