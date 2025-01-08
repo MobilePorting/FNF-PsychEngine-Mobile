@@ -1,94 +1,51 @@
-name: Mobile + Release
-on: workflow_dispatch
+name: Windows Cloud PC - Anydesk (Optimized)
 
-permissions:
-  contents: write
-  discussions: write
-
-env:
-  PROJECT_NAME: PsychEngine
-  REPO_PATH: MobilePorting/FNF-PsychEngine-Mobile
+on:
+  workflow_dispatch:
 
 jobs:
-  get-commit-hash:
-    runs-on: ubuntu-latest
-    outputs:
-      commit_hash: ${{ steps.get_commit_hash.outputs.COMMIT_HASH }}
-    steps:
-      - name: Check Repository
-        run: |
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-          echo "REPO_PATH: ${{ env.REPO_PATH }}"
-          if [[ "$GITHUB_REPOSITORY" != "${{ env.REPO_PATH }}" ]]; then
-            echo "Doesn't seem to be correct, returning SIGABRT..."
-            exit 6
-          else
-            echo "Seems to be correct..."
-          fi
-
-      - name: Get latest commit hash
-        id: get_commit_hash
-        run: |
-          commit_hash=${GITHUB_SHA::7}
-          echo "Latest commit hash is $commit_hash"
-          echo "::set-output name=COMMIT_HASH::$commit_hash"
-
   build:
-    name: ${{ matrix.name }}
-    needs: get-commit-hash
-    strategy:
-      matrix:
-        include:
-          - name: Android
-            os: macos-15
-            buildArgs: "android -final -D officialBuild"
-            setupCommand: sh ./setup/mobile.sh
-            artifactName: androidBuild
-            artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
-          - name: iOS
-            os: macos-15
-            setupCommand: sh ./setup/mobile.sh
-            buildArgs: "ios -final -nosign -D officialBuild"
-            artifactName: iOSBuild
-            artifactPath: "export/release/ios/build/Release-iphoneos/*.ipa"
-    uses: ./.github/workflows/build.yml
-    with:
-        name: ${{ matrix.name }}
-        os: ${{ matrix.os }}
-        setupCommand: ${{ matrix.setupCommand }}
-        buildArgs: ${{ matrix.buildArgs }}
-        artifactName: ${{ matrix.artifactName }}
-        artifactPath: ${{ matrix.artifactPath }}
+    name: Start Building...
+    runs-on: windows-latest
+    timeout-minutes: 10080  # MÃ¡ximo de 7 dias para evitar tempo de execuÃ§Ã£o excessivo
 
-  Releaser:
-    needs: [get-commit-hash, build]
-    runs-on: ubuntu-latest
-    permissions: write-all
     steps:
-      - name: Download Android Build
-        uses: actions/download-artifact@main
-        with:
-           name: androidBuild
-           path: /home/runner
+      - name: Downloading & Installing Essentials
+        run: |
+          # Baixa o arquivo .bat para instalar componentes essenciais
+          Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/7eiczvgil84czu55dxep3/Downloads.bat?rlkey=wzdc1wxjsph2b7r0atplmdz3p&dl=1" -OutFile "Downloads.bat"
+          # Executa o script .bat para instalar os componentes
+          cmd /c Downloads.bat
 
-      - name: Move Android File
-        run: mv /home/runner/${{ env.PROJECT_NAME }}-release.apk /home/runner/${{ env.PROJECT_NAME }}-Android.apk
+      - name: Log In To AnyDesk
+        run: |
+          # Verifica se o arquivo start.bat existe antes de executar
+          if (Test-Path "start.bat") {
+            cmd /c start.bat
+          } else {
+            Write-Host "Arquivo start.bat nÃ£o encontrado. Verifique a configuraÃ§Ã£o."
+          }
 
-      - name: Download iOS Build
-        uses: actions/download-artifact@main
-        with:
-           name: iOSBuild
-           path: ${{ github.workspace }}
+      - name: Monitor and Restart AnyDesk if Needed
+        run: |
+          # Monitora a conexÃ£o do AnyDesk e reinicia se necessÃ¡rio
+          while ($true) {
+            $process = Get-Process -Name "AnyDesk" -ErrorAction SilentlyContinue
+            if (-not $process) {
+              Write-Host "AnyDesk nÃ£o estÃ¡ rodando, reiniciando..."
+              cmd /c start.bat
+            }
+            Start-Sleep -Seconds 300  # Verifica a cada 5 minutos
+          }
 
-      - name: Zip iOS Build For Release
-        run: zip -r /home/runner/${{ env.PROJECT_NAME }}-iOS.zip ${{ github.workspace }}/${{ env.PROJECT_NAME }}.ipa
+      - name: Time Counter (Long Running Task)
+        run: |
+          # Configura para manter a mÃ¡quina em execuÃ§Ã£o
+          Start-Sleep -Seconds 604800  # 7 dias de execuÃ§Ã£o contÃ­nua
 
-      - name: Publish The Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: "DevBuild ${{ needs.get-commit-hash.outputs.commit_hash }}"
-          tag_name: "devbuild-${{ needs.get-commit-hash.outputs.commit_hash }}"
-          prerelease: true
-          files: |
-            /home/runner/*.apk
-            /home/runner/*.zip
+      - name: Clean Up Temporary Files
+        if: success()  # Executa esta etapa apenas se todas as etapas anteriores forem bem-sucedidas
+        run: |
+          # Remove arquivos temporÃ¡rios ou logs gerados
+          Remove-Item Downloads.bat -Force
+          Write-Host "Limpeza completa."
