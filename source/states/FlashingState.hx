@@ -28,7 +28,7 @@ class FlashingState extends MusicBeatState
 		add(texts);
 
 		var warnText:FlxText = new FlxText(0, 0, FlxG.width,
-			"Hey, watch out!\n
+			"Yoo, watch out!\n
 			This Mod contains some flashing lights!\n
 			Do you wish to disable them?");
 		warnText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
@@ -44,8 +44,10 @@ class FlashingState extends MusicBeatState
 			texts.add(button);
 		}
 
+		#if mobile
 		addTouchPad("LEFT_RIGHT", "A_B");
 		touchPad.alpha = 0;
+		#end
 
 		FlxTween.tween(texts, {alpha: 1.0}, 0.5, {
 			onComplete: (_) -> updateItems()
