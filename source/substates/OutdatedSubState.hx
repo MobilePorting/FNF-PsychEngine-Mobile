@@ -28,7 +28,7 @@ class OutdatedSubState extends MusicBeatSubstate
 		add(bg);
 
 		warnText = new FlxText(0, 0, FlxG.width,
-			'Sup bro, looks like you\'re running an outdated version of\nPsych Engine (${MainMenuState.psychEngineVersion})\n
+			'Sup bro, looks like you\'re running an outdated version of\nAlafandy Engine (${MainMenuState.alafandyEngineVersion})\n
 			-----------------------------------------------\n
 			Press $enter to update to the latest version ${updateVersion}\n
 			Press $back to proceed anyway.\n
@@ -43,8 +43,10 @@ class OutdatedSubState extends MusicBeatSubstate
 		warnText.alpha = 0.0;
 		add(warnText);
 
+		#if mobile
 		addTouchPad("NONE", "A_B");
 		touchPad.alpha = 0;
+		#end
 
 		FlxTween.tween(bg, { alpha: 0.8 }, 0.6, { ease: FlxEase.sineIn });
 		FlxTween.tween(warnText, { alpha: 1.0 }, 0.6, { ease: FlxEase.sineIn });
@@ -56,7 +58,7 @@ class OutdatedSubState extends MusicBeatSubstate
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/MobilePorting/FNF-PsychEngine-Mobile/releases");
+				CoolUtil.browserLoad("https://github.com/AliAlafandy/FNF-AlafandyEngine/releases");
 			}
 			else if(controls.BACK) {
 				leftState = true;
