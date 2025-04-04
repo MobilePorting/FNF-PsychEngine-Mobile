@@ -328,7 +328,22 @@ class TitleState extends MusicBeatState
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT || TouchUtil.justPressed;
+		if (FlxG.keys.justPressed.F)
+		{
+			FlxG.fullscreen = !FlxG.fullscreen;
+		}
+
+		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
+
+		#if mobile
+		for (touch in FlxG.touches.list)
+		{
+			if (TouchUIl.justPressed)
+			{
+				pressedEnter = true;
+			}
+		}
+		#end
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
