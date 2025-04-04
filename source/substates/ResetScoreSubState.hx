@@ -75,8 +75,10 @@ class ResetScoreSubState extends MusicBeatSubstate
 		for(letter in yesText.letters) letter.color = FlxColor.RED;
 		updateOptions();
 
+		#if mobile
 		addTouchPad('LEFT_RIGHT', 'A_B');
 		addTouchPadCamera();
+		#end
 	}
 
 	override function update(elapsed:Float)
