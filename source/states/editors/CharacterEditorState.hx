@@ -1114,57 +1114,67 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 	}
 
 	final assetFolder = 'week1';  //load from assets/week1/
-	inline function loadBG()
+inline var stageMinX:Float = -600;
+inline var stageMaxX:Float = 1300;
+inline var stageMinY:Float = -200;
+inline var stageMaxY:Float = 1200;
+
+inline function loadBG()
+{
+	var lastLoaded = Paths.currentLevel;
+	Paths.currentLevel = assetFolder;
+
+	/////////////
+	// bg data //
+	/////////////
+	#if !BASE_GAME_FILES
+	camEditor.bgColor = 0xFF666666;
+	#else
+	var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
+	add(bg);
+
+	var stageFront:BGSprite = new BGSprite('stagefront', -650, 600, 0.9, 0.9);
+	stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+	stageFront.updateHitbox();
+	add(stageFront);
+	#end
+
+	dadPosition.set(100, 100);
+	bfPosition.set(770, 100);
+	/////////////
+
+	Paths.currentLevel = lastLoaded;
+}
+
+inline function updatePointerPos(?snap:Bool = true)
+{
+	if(character == null || cameraFollowPointer == null) return;
+
+	var offX:Float = 0;
+	var offY:Float = 0;
+	if(!character.isPlayer)
 	{
-		var lastLoaded = Paths.currentLevel;
-		Paths.currentLevel = assetFolder;
-
-		/////////////
-		// bg data //
-		/////////////
-		#if !BASE_GAME_FILES
-		camEditor.bgColor = 0xFF666666;
-		#else
-		var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
-		add(bg);
-
-		var stageFront:BGSprite = new BGSprite('stagefront', -650, 600, 0.9, 0.9);
-		stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-		stageFront.updateHitbox();
-		add(stageFront);
-		#end
-
-		dadPosition.set(100, 100);
-		bfPosition.set(770, 100);
-		/////////////
-
-		Paths.currentLevel = lastLoaded;
+		offX = character.getMidpoint().x + 150 + character.cameraPosition[0];
+		offY = character.getMidpoint().y - 100 + character.cameraPosition[1];
 	}
-
-	inline function updatePointerPos(?snap:Bool = true)
+	else
 	{
-		if(character == null || cameraFollowPointer == null) return;
-
-		var offX:Float = 0;
-		var offY:Float = 0;
-		if(!character.isPlayer)
-		{
-			offX = character.getMidpoint().x + 150 + character.cameraPosition[0];
-			offY = character.getMidpoint().y - 100 + character.cameraPosition[1];
-		}
-		else
-		{
-			offX = character.getMidpoint().x - 100 - character.cameraPosition[0];
-			offY = character.getMidpoint().y - 100 + character.cameraPosition[1];
-		}
-		cameraFollowPointer.setPosition(offX, offY);
-
-		if(snap)
-		{
-			FlxG.camera.scroll.x = cameraFollowPointer.getMidpoint().x - FlxG.width/2;
-			FlxG.camera.scroll.y = cameraFollowPointer.getMidpoint().y - FlxG.height/2;
-		}
+		offX = character.getMidpoint().x - 100 - character.cameraPosition[0];
+		offY = character.getMidpoint().y - 100 + character.cameraPosition[1];
 	}
+	cameraFollowPointer.setPosition(offX, offY);
+
+	if(snap)
+	{
+		FlxG.camera.scroll.x = cameraFollowPointer.getMidpoint().x - FlxG.width/2;
+		FlxG.camera.scroll.y = cameraFollowPointer.getMidpoint().y - FlxG.height/2;
+
+		if (FlxG.camera.scroll.x < stageMinX) FlxG.camera.scroll.x = stageMinX;
+		if (FlxG.camera.scroll.x > stageMaxX - FlxG.width) FlxG.camera.scroll.x = stageMaxX - FlxG.width;
+		if (FlxG.camera.scroll.y < stageMinY) FlxG.camera.scroll.y = stageMinY;
+		if (FlxG.camera.scroll.y > stageMaxY - FlxG.height) FlxG.camera.scroll.y = stageMaxY - FlxG.height;
+	}
+}
 
 	inline function updateHealthBar()
 	{
