@@ -54,6 +54,7 @@ class DialogueCharacter extends FlxSprite
 		var characterPath:String = 'images/dialogue/' + character + '.json';
 		var rawJson = null;
 
+		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(characterPath);
 		if (!PsychFileSystem.exists(path)) {
 			path = Paths.getSharedPath(characterPath);
@@ -63,6 +64,11 @@ class DialogueCharacter extends FlxSprite
 			path = Paths.getSharedPath('images/dialogue/' + DEFAULT_CHARACTER + '.json');
 		}
 		rawJson = PsychFile.getContent(path);
+
+		#else
+		var path:String = Paths.getSharedPath(characterPath);
+		rawJson = Assets.getText(path);
+		#end
 		
 		jsonFile = cast Json.parse(rawJson);
 	}
