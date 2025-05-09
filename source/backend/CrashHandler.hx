@@ -3,10 +3,6 @@ package backend;
 import openfl.events.UncaughtErrorEvent;
 import openfl.events.ErrorEvent;
 import openfl.errors.Error;
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
 
 using StringTools;
 using flixel.util.FlxArrayUtil;
@@ -103,14 +99,12 @@ class CrashHandler
 	#if sys
 	private static function saveErrorMessage(message:String):Void
 	{
-		final folder:String = #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'logs/';
-
 		try
 		{
-			if (!FileSystem.exists(folder))
-				FileSystem.createDirectory(folder);
+			if (!PsychFileSystem.exists('logs'))
+				PsychFileSystem.createDirectory('logs');
 
-			File.saveContent(folder + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', message);
+			PsychFile.saveContent('logs' + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', message);
 		}
 		catch (e:haxe.Exception)
 			trace('Couldn\'t save error message. (${e.message})');

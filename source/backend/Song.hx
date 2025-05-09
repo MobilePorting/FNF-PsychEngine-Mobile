@@ -145,12 +145,8 @@ class Song
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 		_lastPath = Paths.json('$formattedFolder/$formattedSong');
 
-		#if MODS_ALLOWED
-		if(FileSystem.exists(_lastPath))
-			rawData = File.getContent(_lastPath);
-		else
-		#end
-			rawData = Assets.getText(_lastPath);
+		if(PsychFileSystem.exists(_lastPath))
+			rawData = PsychFile.getContent(_lastPath);
 
 		return rawData != null ? parseJSON(rawData, jsonInput) : null;
 	}

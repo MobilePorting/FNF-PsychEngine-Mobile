@@ -114,10 +114,10 @@ class ModsMenuState extends MusicBeatState
 		var myY = buttonReload.y + buttonReload.bg.height + 20;
 		/*buttonModFolder = new MenuButton(buttonX, myY, buttonWidth, buttonHeight, "MODS FOLDER", function() {
 			var modFolder = Paths.mods();
-			if(!FileSystem.exists(modFolder))
+			if(!PsychFileSystem.exists(modFolder))
 			{
 				trace('created missing folder');
-				FileSystem.createDirectory(modFolder);
+				PsychFileSystem.createDirectory(modFolder);
 			}
 			CoolUtil.openFolder(modFolder);
 		});
@@ -814,8 +814,8 @@ class ModsMenuState extends MusicBeatState
 			fileStr += '$mod|$on';
 		}
 
-		var path:String = #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'modsList.txt';
-		File.saveContent(path, fileStr);
+		var path:String = 'modsList.txt';
+		PsychFile.saveContent(path, fileStr);
 		Mods.parseList();
 		Mods.loadTopMod();
 	}
@@ -846,12 +846,12 @@ class ModItem extends FlxSpriteGroup
 		pack = Mods.getPack(folder);
 
 		var path:String = Paths.mods('$folder/data/settings.json');
-		if(FileSystem.exists(path))
+		if(PsychFileSystem.exists(path))
 		{
 			try
 			{
 				//trace('trying to load settings: $folder');
-				settings = tjson.TJSON.parse(File.getContent(path));
+				settings = tjson.TJSON.parse(PsychFile.getContent(path));
 			}
 			catch(e:Dynamic)
 			{
@@ -878,17 +878,17 @@ class ModItem extends FlxSpriteGroup
 
 		var isPixel = false;
 		var file:String = Paths.mods('$folder/pack.png');
-		if (!FileSystem.exists(file))
+		if (!PsychFileSystem.exists(file))
 		{
 			file = Paths.mods('$folder/pack-pixel.png');
 			isPixel = true;
 		}
 		
 		var bmp:BitmapData = null;
-		if (FileSystem.exists(file)) bmp = BitmapData.fromFile(file);
+		if (PsychFileSystem.exists(file)) bmp = BitmapData.fromFile(file);
 		else isPixel = false;
 
-		if(FileSystem.exists(file))
+		if(PsychFileSystem.exists(file))
 		{
 			icon.loadGraphic(Paths.cacheBitmap(file, bmp), true, 150, 150);
 			if(isPixel) icon.antialiasing = false;

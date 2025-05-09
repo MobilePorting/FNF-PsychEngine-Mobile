@@ -469,11 +469,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 
 			var characterPath:String = 'characters/$intended.json';
 			var path:String = Paths.getPath(characterPath, TEXT, null, true);
-			#if MODS_ALLOWED
-			if (FileSystem.exists(path))
-			#else
-			if (Assets.exists(path))
-			#end
+			if (PsychFileSystem.exists(path))
 			{
 				_char = intended;
 				check_player.checked = character.isPlayer;
@@ -1267,7 +1263,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		characterList = Mods.mergeAllTextsNamed('data/characterList.txt');
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getSharedPath(), 'characters/');
 		for (folder in foldersToCheck)
-			for (file in Paths.readDirectory(folder))
+			for (file in PsychFileSystem.readDirectory(folder))
 				if(file.toLowerCase().endsWith('.json'))
 				{
 					var charToCheck:String = file.substr(0, file.length - 5);

@@ -40,11 +40,11 @@ class ErrorHandledShader extends FlxShader implements IErrorHandler
 		var errMsg:String = "";
 		var dateNow:String = Date.now().toString().replace(" ", "_").replace(":", "'");
 
-		if (!FileSystem.exists('./logs/'))
-			FileSystem.createDirectory('./logs/');
+		if (!PsychFileSystem.exists('./logs/'))
+			PsychFileSystem.createDirectory('./logs/');
 
 		var crashLogPath:String = './logs/shader_${shaderName}_${dateNow}.txt';
-		File.saveContent(crashLogPath, error);
+		PsychFile.saveContent(crashLogPath, error);
 		Application.current.window.alert('Error log saved at: $crashLogPath', alertTitle);
 		#else
 		Application.current.window.alert('Error logs aren\'t created on debug builds, check the trace log instead.', alertTitle);

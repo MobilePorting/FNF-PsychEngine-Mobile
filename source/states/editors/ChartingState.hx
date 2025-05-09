@@ -720,12 +720,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				Reflect.setField(songCopy, '__original_path', Song.chartPath);
 				var dataToSave:String = haxe.Json.stringify(songCopy);
 				//trace(chartName, dataToSave);
-				if(!FileSystem.isDirectory('backups')) FileSystem.createDirectory('backups');
-				File.saveContent('backups/$chartName.$BACKUP_EXT', dataToSave);
+				if(!PsychFileSystem.isDirectory('backups')) PsychFileSystem.createDirectory('backups');
+				PsychFile.saveContent('backups/$chartName.$BACKUP_EXT', dataToSave);
 
 				if(backupLimit > 0)
 				{
-					var files:Array<String> = Paths.readDirectory('backups/').filter((file:String) -> file.endsWith('.$BACKUP_EXT'));
+					var files:Array<String> = PsychFileSystem.readDirectory('backups/').filter((file:String) -> file.endsWith('.$BACKUP_EXT'));
 					if(files.length > backupLimit)
 					{
 						var incorrect:Array<String> = [];
@@ -762,7 +762,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 							//trace('removed $file');
 							try
 							{
-								FileSystem.deleteFile('backups/$file');
+								PsychFileSystem.deleteFile('backups/$file');
 							}
 							catch(e:Exception) {}
 						}
@@ -3655,13 +3655,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			upperBox.isMinimized = true;
 			upperBox.bg.visible = false;
 
-			if(!FileSystem.exists('backups/'))
+			if(!PsychFileSystem.exists('backups/'))
 			{
 				showOutput('The "backups" folder does not exist.', true);
 				return;
 			}
 			
-			var fileList:Array<String> = Paths.readDirectory('backups/').filter((file:String) -> file.endsWith('.$BACKUP_EXT'));
+			var fileList:Array<String> = PsychFileSystem.readDirectory('backups/').filter((file:String) -> file.endsWith('.$BACKUP_EXT'));
 			if(fileList.length < 1)
 			{
 				showOutput('No autosave files found.', true);
@@ -3694,11 +3694,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						var path:String = 'backups/$autosaveName';
 						state.close();
 
-						if(FileSystem.exists(path))
+						if(PsychFileSystem.exists(path))
 						{
 							try
 							{
-								var loadedChart:SwagSong = Song.parseJSON(File.getContent(path), autosaveName, null);
+								var loadedChart:SwagSong = Song.parseJSON(PsychFile.getContent(path), autosaveName, null);
 								if(loadedChart == null || !Reflect.hasField(loadedChart, '__original_path'))
 								{
 									showOutput('Error: File loaded is not a valid Psych Engine autosave.', true);
@@ -3711,7 +3711,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	
 								var func:Void->Void = function()
 								{
-									Song.chartPath = FileSystem.exists(originalPath) ? originalPath : null;
+									Song.chartPath = PsychFileSystem.exists(originalPath) ? originalPath : null;
 									loadChart(loadedChart);
 									reloadNotesDropdowns();
 									prepareReload();
@@ -3891,11 +3891,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					return;
 				}
 	
-				if(FileSystem.exists(Song.chartPath))
+				if(PsychFileSystem.exists(Song.chartPath))
 				{
 					try
 					{
-						var reloadedChart:SwagSong = Song.parseJSON(File.getContent(Song.chartPath));
+						var reloadedChart:SwagSong = Song.parseJSON(PsychFile.getContent(Song.chartPath));
 						loadChart(reloadedChart);
 						reloadNotesDropdowns();
 						prepareReload();
@@ -4049,9 +4049,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 									{
 										var diffPostfix:String = (diff != defaultDiff) ? '-$diff' : '';
 										var chartToFind:String = parentFolder + songName + diffPostfix + '.json';
-										if(FileSystem.exists(chartToFind))
+										if(PsychFileSystem.exists(chartToFind))
 										{
-											var diffChart:SwagSong = Song.parseJSON(File.getContent(chartToFind), songName + diffPostfix);
+											var diffChart:SwagSong = Song.parseJSON(PsychFile.getContent(chartToFind), songName + diffPostfix);
 											if(diffChart != null)
 											{
 												var subpack:VSlicePackage = VSlice.export(diffChart);
@@ -4069,9 +4069,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 									}
 									
 									var chartToFind:String = parentFolder + 'events.json';
-									if(FileSystem.exists(chartToFind))
+									if(PsychFileSystem.exists(chartToFind))
 									{
-										var eventsChart:SwagSong = Song.parseJSON(File.getContent(chartToFind), 'events');
+										var eventsChart:SwagSong = Song.parseJSON(PsychFile.getContent(chartToFind), 'events');
 										if(eventsChart != null)
 										{
 											var subpack:VSlicePackage = VSlice.export(eventsChart);
@@ -4278,7 +4278,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					{
 						loadedChart.format = 'psych_v1_convert';
 						Song.convert(loadedChart);
-						File.saveContent(fileDialog.path, PsychJsonPrinter.print(loadedChart, ['sectionNotes', 'events']));
+						PsychFile.saveContent(fileDialog.path, PsychJsonPrinter.print(loadedChart, ['sectionNotes', 'events']));
 						showOutput('Updated "$filePath" from format "$fmt" to "psych_v1" successfully!');
 					}
 					else showOutput('Chart is already up-to-date! Format: "$fmt"', true);
@@ -4879,7 +4879,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var chartName:String = Paths.formatToSongPath(PlayState.SONG.song) + '.json';
 			StorageUtil.saveContent(chartName, chartData);
 			#else
-			File.saveContent(Song.chartPath, chartData);
+			PsychFile.saveContent(Song.chartPath, chartData);
 			showOutput('Chart saved successfully to: ${Song.chartPath}');
 			#end
 		}
@@ -5152,10 +5152,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		for (directory in Mods.directoriesWithFile(Paths.getSharedPath(), mainFolder))
 		{
-			for (file in Paths.readDirectory(directory))
+			for (file in PsychFileSystem.readDirectory(directory))
 			{
 				var path = haxe.io.Path.join([directory, file.trim()]);
-				if (!FileSystem.isDirectory(path) && !file.startsWith('readme.'))
+				if (!PsychFileSystem.isDirectory(path) && !file.startsWith('readme.'))
 				{
 					for (fileType in fileTypes)
 					{
@@ -5179,11 +5179,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			try
 			{
 				var path:String = Paths.getPath('characters/' + char + '.json', TEXT);
-				#if MODS_ALLOWED
-				var unparsedJson = File.getContent(path);
-				#else
-				var unparsedJson = Assets.getText(path);
-				#end
+				var unparsedJson = PsychFile.getContent(path);
 				return cast Json.parse(unparsedJson);
 			}
 			catch (e:Dynamic) {}
@@ -5194,12 +5190,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var overwriteSavedSomething:Bool = false;
 	function overwriteCheck(savePath:String, overwriteName:String, saveData:String, continueFunc:Void->Void = null, ?continueOnCancel:Bool = false)
 	{
-		if(FileSystem.exists(savePath))
+		if(PsychFileSystem.exists(savePath))
 		{
 			openSubState(new Prompt('Overwrite: "$overwriteName"?', function()
 			{
 				overwriteSavedSomething = true;
-				File.saveContent(savePath, saveData);
+				PsychFile.saveContent(savePath, saveData);
 				if(continueFunc != null) continueFunc();
 			},
 			continueOnCancel ? (function() if(continueFunc != null) continueFunc()) : null));
@@ -5207,7 +5203,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		else
 		{
 			overwriteSavedSomething = true;
-			File.saveContent(savePath, saveData);
+			PsychFile.saveContent(savePath, saveData);
 			if(continueFunc != null) continueFunc();
 		}
 	}

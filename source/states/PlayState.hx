@@ -446,9 +446,9 @@ class PlayState extends MusicBeatState
 		// "SCRIPTS FOLDER" SCRIPTS
 		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'scripts/'))
 			#if linux
-			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
+			for (file in CoolUtil.sortAlphabetically(PsychFileSystem.readDirectory(folder)))
 			#else
-			for (file in Paths.readDirectory(folder))
+			for (file in PsychFileSystem.readDirectory(folder))
 			#end
 			{
 				#if LUA_ALLOWED
@@ -606,9 +606,9 @@ class PlayState extends MusicBeatState
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/$songName/'))
 			#if linux
-			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
+			for (file in CoolUtil.sortAlphabetically(PsychFileSystem.readDirectory(folder)))
 			#else
-			for (file in Paths.readDirectory(folder))
+			for (file in PsychFileSystem.readDirectory(folder))
 			#end
 			{
 				#if LUA_ALLOWED
@@ -785,21 +785,18 @@ class PlayState extends MusicBeatState
 		var luaFile:String = 'characters/$name.lua';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(luaFile);
-		if(FileSystem.exists(replacePath))
+		if(PsychFileSystem.exists(replacePath))
 		{
 			luaFile = replacePath;
 			doPush = true;
 		}
 		else
+		#end
 		{
 			luaFile = Paths.getSharedPath(luaFile);
-			if(FileSystem.exists(luaFile))
+			if(PsychFileSystem.exists(luaFile))
 				doPush = true;
 		}
-		#else
-		luaFile = Paths.getSharedPath(luaFile);
-		if(Assets.exists(luaFile)) doPush = true;
-		#end
 
 		if(doPush)
 		{
@@ -821,7 +818,7 @@ class PlayState extends MusicBeatState
 		var scriptFile:String = 'characters/' + name + '.hx';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(scriptFile);
-		if(FileSystem.exists(replacePath))
+		if(PsychFileSystem.exists(replacePath))
 		{
 			scriptFile = replacePath;
 			doPush = true;
@@ -830,7 +827,7 @@ class PlayState extends MusicBeatState
 		#end
 		{
 			scriptFile = Paths.getSharedPath(scriptFile);
-			if(FileSystem.exists(scriptFile))
+			if(PsychFileSystem.exists(scriptFile))
 				doPush = true;
 		}
 
@@ -868,7 +865,7 @@ class PlayState extends MusicBeatState
 		var fileName:String = Paths.video(name);
 
 		#if sys
-		if (FileSystem.exists(fileName))
+		if (PsychFileSystem.exists(fileName))
 		#else
 		if (OpenFlAssets.exists(fileName))
 		#end
@@ -3357,13 +3354,13 @@ class PlayState extends MusicBeatState
 	{
 		#if MODS_ALLOWED
 		var luaToLoad:String = Paths.modFolders(luaFile);
-		if(!FileSystem.exists(luaToLoad))
+		if(!PsychFileSystem.exists(luaToLoad))
 			luaToLoad = Paths.getSharedPath(luaFile);
 
-		if(FileSystem.exists(luaToLoad))
-		#elseif sys
+		if(PsychFileSystem.exists(luaToLoad))
+		#else
 		var luaToLoad:String = Paths.getSharedPath(luaFile);
-		if(OpenFlAssets.exists(luaToLoad))
+		if(PsychFileSystem.exists(luaToLoad))
 		#end
 		{
 			for (script in luaArray)
@@ -3381,13 +3378,13 @@ class PlayState extends MusicBeatState
 	{
 		#if MODS_ALLOWED
 		var scriptToLoad:String = Paths.modFolders(scriptFile);
-		if(!FileSystem.exists(scriptToLoad))
+		if(!PsychFileSystem.exists(scriptToLoad))
 			scriptToLoad = Paths.getSharedPath(scriptFile);
 		#else
 		var scriptToLoad:String = Paths.getSharedPath(scriptFile);
 		#end
 
-		if(FileSystem.exists(scriptToLoad))
+		if(PsychFileSystem.exists(scriptToLoad))
 		{
 			if (Iris.instances.exists(scriptToLoad)) return false;
 
@@ -3679,16 +3676,16 @@ class PlayState extends MusicBeatState
 			var frag:String = folder + name + '.frag';
 			var vert:String = folder + name + '.vert';
 			var found:Bool = false;
-			if(FileSystem.exists(frag))
+			if(PsychFileSystem.exists(frag))
 			{
-				frag = File.getContent(frag);
+				frag = PsychFile.getContent(frag);
 				found = true;
 			}
 			else frag = null;
 
-			if(FileSystem.exists(vert))
+			if(PsychFileSystem.exists(vert))
 			{
-				vert = File.getContent(vert);
+				vert = PsychFile.getContent(vert);
 				found = true;
 			}
 			else vert = null;

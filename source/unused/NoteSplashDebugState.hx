@@ -343,7 +343,7 @@ class NoteSplashDebugState extends MusicBeatState implements PsychUIEventHandler
 		var path:String = pathSplit[pathSplit.length-1].trim() + '.txt';
 		var assetsDir:String = '';
 		savedText.text = 'Saved to: $path';
-		File.saveContent(path, strToSave);
+		PsychFile.saveContent(path, strToSave);
 
 		//trace(strToSave);
 		#else

@@ -211,26 +211,19 @@ class ExtraFunctions
 
 		// File management
 		Lua_helper.add_callback(lua, "checkFileExists", function(filename:String, ?absolute:Bool = false) {
-			#if MODS_ALLOWED
-			if(absolute) return FileSystem.exists(filename);
+			if(absolute) return PsychFileSystem.exists(filename);
 
-			return FileSystem.exists(Paths.getPath(filename, TEXT));
-
-			#else
-			if(absolute) return Assets.exists(filename, TEXT);
-
-			return Assets.exists(Paths.getPath(filename, TEXT));
-			#end
+			return PsychFileSystem.exists(Paths.getPath(filename, TEXT));
 		});
 		Lua_helper.add_callback(lua, "saveFile", function(path:String, content:String, ?absolute:Bool = false)
 		{
 			try {
 				#if MODS_ALLOWED
 				if(!absolute)
-					File.saveContent(Paths.mods(path), content);
+					PsychFile.saveContent(Paths.mods(path), content);
 				else
 				#end
-					File.saveContent(path, content);
+					PsychFile.saveContent(path, content);
 
 				return true;
 			} catch (e:Dynamic) {
@@ -243,9 +236,9 @@ class ExtraFunctions
 			try {
 				var lePath:String = path;
 				if(!absolute) lePath = Paths.getPath(path, TEXT, !ignoreModFolders);
-				if(FileSystem.exists(lePath))
+				if(PsychFileSystem.exists(lePath))
 				{
-					FileSystem.deleteFile(lePath);
+					PsychFileSystem.deleteFile(lePath);
 					return true;
 				}
 			} catch (e:Dynamic) {
@@ -259,8 +252,8 @@ class ExtraFunctions
 		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
 			var list:Array<String> = [];
 			#if sys
-			if(FileSystem.exists(folder)) {
-				for (folder in Paths.readDirectory(folder)) {
+			if(PsychFileSystem.exists(folder)) {
+				for (folder in PsychFileSystem.readDirectory(folder)) {
 					if (!list.contains(folder)) {
 						list.push(folder);
 					}

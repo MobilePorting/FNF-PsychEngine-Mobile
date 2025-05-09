@@ -103,7 +103,7 @@ class FileDialogHandler extends FlxBasic
 	{
 		@:privateAccess
 		this.path = _fileRef.__path;
-		this.data = File.getContent(this.path);
+		this.data = PsychFile.getContent(this.path);
 		this.completed = true;
 		trace('Loaded file from: $path');
 

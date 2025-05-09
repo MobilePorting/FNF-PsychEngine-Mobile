@@ -231,9 +231,9 @@ class Achievements {
 	inline static function loadAchievementJson(path:String, addMods:Bool = true)
 	{
 		var retVal:Array<Dynamic> = null;
-		if(FileSystem.exists(path)) {
+		if(PsychFileSystem.exists(path)) {
 			try {
-				var rawJson:String = File.getContent(path).trim();
+				var rawJson:String = PsychFile.getContent(path).trim();
 				if(rawJson != null && rawJson.length > 0) retVal = tjson.TJSON.parse(rawJson); //Json.parse('{"achievements": $rawJson}').achievements;
 				
 				if(addMods && retVal != null)
