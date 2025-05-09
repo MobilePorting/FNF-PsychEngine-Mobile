@@ -70,8 +70,6 @@
 	<assets path="assets/fonts" />
 	<assets path="assets/shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/embed"         exclude="*.ogg" if="web" embed="true"/>
-	<assets path="assets/embed"         exclude="*.mp3" unless="web" embed="true"/>
 	<assets path="assets/videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         exclude="*.mp3" unless="web"/>
@@ -97,7 +95,7 @@
 	<define name="CHECK_FOR_UPDATES" if="officialBuild"/>
 
 	<section if="MODS_ALLOWED">
-		<assets path='example_mods' rename='mods' embed='false' />
+		<assets path='example_mods' rename='mods' />
 		<assets path='list.txt' rename='modsList.txt' />
 	</section>
 	

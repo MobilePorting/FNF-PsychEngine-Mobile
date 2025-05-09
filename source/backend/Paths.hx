@@ -248,11 +248,9 @@ class Paths
 		if (bitmap == null)
 		{
 			var file:String = getPath(key, IMAGE, parentFolder, true);
-			#if MODS_ALLOWED
+
 			if (PsychFileSystem.exists(file))
 				bitmap = BitmapData.fromFile(file);
-			else #end if (OpenFlAssets.exists(file, IMAGE))
-				bitmap = OpenFlAssets.getBitmapData(file);
 
 			if (bitmap == null)
 			{
