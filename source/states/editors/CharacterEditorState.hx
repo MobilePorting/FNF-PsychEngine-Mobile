@@ -169,13 +169,6 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		addTouchPad('LEFT_FULL', 'CHARACTER_EDITOR');
 		addTouchPadCamera();
 
-		if (controls.mobileC)
-		{
-			FlxG.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseEvent);
-			FlxG.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseEvent);
-			FlxG.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent);
-		}
-
 		if(ClientPrefs.data.cacheOnGPU) Paths.clearUnusedMemory();
 
 		super.create();
@@ -907,10 +900,10 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		if(FlxG.keys.pressed.CONTROL) ctrlMult = 0.25;
 
 		// CAMERA CONTROLS
-		if (FlxG.keys.pressed.J) FlxG.camera.scroll.x -= elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.K) FlxG.camera.scroll.y += elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.L) FlxG.camera.scroll.x += elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.I) FlxG.camera.scroll.y -= elapsed * 500 * shiftMult * ctrlMult;
+		if ((touchPad.buttonG.pressed && touchPad.buttonLeft.pressed) || FlxG.keys.pressed.J) FlxG.camera.scroll.x -= elapsed * 500 * shiftMult * ctrlMult;
+		if ((touchPad.buttonG.pressed && touchPad.buttonDown.pressed) || FlxG.keys.pressed.K) FlxG.camera.scroll.y += elapsed * 500 * shiftMult * ctrlMult;
+		if ((touchPad.buttonG.pressed && touchPad.buttonRight.pressed) || FlxG.keys.pressed.L) FlxG.camera.scroll.x += elapsed * 500 * shiftMult * ctrlMult;
+		if ((touchPad.buttonG.pressed && touchPad.buttonUp.pressed) || FlxG.keys.pressed.I) FlxG.camera.scroll.y -= elapsed * 500 * shiftMult * ctrlMult;
 
 		var lastZoom = FlxG.camera.zoom;
 		if(FlxG.keys.justPressed.R && !FlxG.keys.pressed.CONTROL || touchPad.buttonZ.justPressed) FlxG.camera.zoom = 1;
@@ -929,8 +922,8 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		var changedAnim:Bool = false;
 		if(anims.length > 1)
 		{
-			if((FlxG.keys.justPressed.W || touchPad.buttonV.justPressed) && (changedAnim = true)) curAnim--;
-			else if((FlxG.keys.justPressed.S || touchPad.buttonD.justPressed) && (changedAnim = true)) curAnim++;
+			if((FlxG.keys.justPressed.W || touchPad.buttonV.justPressed) && !touchPad.buttonG.pressed && (changedAnim = true)) curAnim--;
+			else if((FlxG.keys.justPressed.S || touchPad.buttonD.justPressed) && !touchPad.buttonG.pressed && (changedAnim = true)) curAnim++;
 
 			if(changedAnim)
 			{
@@ -944,14 +937,14 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		var changedOffset = false;
 		var moveKeysP = (controls.mobileC) ? [touchPad.buttonLeft.justPressed, touchPad.buttonRight.justPressed, touchPad.buttonUp.justPressed, touchPad.buttonDown.justPressed] : [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
 		var moveKeys =  (controls.mobileC) ? [touchPad.buttonLeft.pressed, touchPad.buttonRight.pressed, touchPad.buttonUp.pressed, touchPad.buttonDown.pressed] : [FlxG.keys.pressed.LEFT, FlxG.keys.pressed.RIGHT, FlxG.keys.pressed.UP, FlxG.keys.pressed.DOWN];
-		if(moveKeysP.contains(true))
+		if(moveKeysP.contains(true) && !touchPad.buttonG.pressed)
 		{
 			character.offset.x += ((moveKeysP[0] ? 1 : 0) - (moveKeysP[1] ? 1 : 0)) * shiftMultBig;
 			character.offset.y += ((moveKeysP[2] ? 1 : 0) - (moveKeysP[3] ? 1 : 0)) * shiftMultBig;
 			changedOffset = true;
 		}
 
-		if(moveKeys.contains(true))
+		if(moveKeys.contains(true) && !touchPad.buttonG.pressed)
 		{
 			holdingArrowsTime += elapsed;
 			if(holdingArrowsTime > 0.6)
@@ -1356,26 +1349,5 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 			_file.save(data, '$_char.json');
 			#end
 		}
-	}
-
-	function onMouseEvent(e:MouseEvent):Void
-	{
-		if (touchPad != null && !touchPad.anyPressed([ANY]))
-			switch (e.type)
-			{
-				case MouseEvent.MOUSE_DOWN:
-					var mouse = new Point(e.stageX, e.stageY); // OpenFL mouse position
-					cameraPosition.x = FlxG.camera.scroll.x + mouse.x;
-					cameraPosition.y = FlxG.camera.scroll.y + mouse.y;
-					isDragging = true;
-
-				case MouseEvent.MOUSE_MOVE if (isDragging):
-					var mouse = new Point(e.stageX, e.stageY);
-					FlxG.camera.scroll.x = cameraPosition.x - mouse.x;
-					FlxG.camera.scroll.y = cameraPosition.y - mouse.y;
-
-				case MouseEvent.MOUSE_UP:
-					isDragging = false;
-			}
 	}
 }

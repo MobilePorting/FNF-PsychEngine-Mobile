@@ -69,6 +69,13 @@
       "x": 870,
       "y": 2,
       "color": "0xFF009D"
+    },
+    {
+      "button": "buttonG",
+      "graphic": "g",
+      "x": 660,
+      "y": 472,
+      "color": "0xCAC4B0"
     }
   ]
 }
