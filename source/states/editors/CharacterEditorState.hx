@@ -8,8 +8,6 @@ import flixel.util.FlxDestroyUtil;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
-import openfl.events.MouseEvent;
-import openfl.geom.Point;
 import openfl.utils.Assets;
 
 import objects.Character;
@@ -57,9 +55,6 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 	var unsavedProgress:Bool = false;
 
 	var selectedFormat:FlxTextFormat = new FlxTextFormat(FlxColor.LIME);
-
-	var cameraPosition:Point = new Point();
-	var isDragging:Bool = false;
 
 	public function new(char:String = null, goToPlayState:Bool = true)
 	{
