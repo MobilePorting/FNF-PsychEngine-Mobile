@@ -1817,8 +1817,7 @@ class FunkinLua {
 
 		for (folder in foldersToCheck)
 		{
-			if(PsychFileSystem.exists(folder))
-			{
+			//if(PsychFileSystem.exists(folder)) {
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
@@ -1842,7 +1841,7 @@ class FunkinLua {
 					//trace('Found shader $name!');
 					return true;
 				}
-			}
+			//}
 		}
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
 		#else

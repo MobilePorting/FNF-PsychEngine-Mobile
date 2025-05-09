@@ -113,7 +113,7 @@ class WeekData {
 		#if MODS_ALLOWED
 		for (i in 0...directories.length) {
 			var directory:String = directories[i] + 'weeks/';
-			if(PsychFileSystem.exists(directory)) {
+			//if(PsychFileSystem.exists(directory)) {
 				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
 				for (daWeek in listOfWeeks)
 				{
@@ -132,7 +132,7 @@ class WeekData {
 						addWeek(file.substr(0, file.length - 5), path, directories[i], i, originalLength);
 					}
 				}
-			}
+			//}
 		}
 		#end
 	}
