@@ -323,7 +323,7 @@ class Paths
 			#end
 		}
 		#end
-		return (PsychFileSystem.exists(getPath(key, type, parentFolder, false)));
+		return (OpenFlAssets.exists(getPath(key, type, parentFolder, false)));
 	}
 
 	static public function getAtlas(key:String, ?parentFolder:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
@@ -332,14 +332,14 @@ class Paths
 		var imageLoaded:FlxGraphic = image(key, parentFolder, allowGPU);
 
 		var myXml:Dynamic = getPath('images/$key.xml', TEXT, parentFolder, true);
-		if(PsychFileSystem.exists(myXml) #if MODS_ALLOWED || (PsychFileSystem.exists(myXml) && (useMod = true)) #end )
+		if(OpenFlAssets.exists(myXml) #if MODS_ALLOWED || (PsychFileSystem.exists(myXml) && (useMod = true)) #end )
 		{
 			return FlxAtlasFrames.fromSparrow(imageLoaded, (useMod ? PsychFile.getContent(myXml) : myXml));
 		}
 		else
 		{
 			var myJson:Dynamic = getPath('images/$key.json', TEXT, parentFolder, true);
-			if(PsychFileSystem.exists(myJson) #if MODS_ALLOWED || (PsychFileSystem.exists(myJson) && (useMod = true)) #end )
+			if(OpenFlAssets.exists(myJson) #if MODS_ALLOWED || (PsychFileSystem.exists(myJson) && (useMod = true)) #end )
 			{
 				return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, (useMod ? PsychFile.getContent(myJson) : myJson));
 			}
