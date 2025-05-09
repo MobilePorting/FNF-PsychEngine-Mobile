@@ -126,7 +126,7 @@ class PsychFileSystem
 			return FileSystem.readDirectory(check(path));
 		#end
 
-		var results:Array<String> = [];
+		var dirs:Array<String> = [];
 		for (item in Assets.list().filter(f -> f.startsWith(path)))
 		{
 			@:privateAccess
@@ -139,6 +139,6 @@ class PsychFileSystem
 					results.push(item);
 			}
 		}
-		return results.map(f -> f.substr(f.lastIndexOf("/") + 1));
+		return dirs.map(f -> f.substr(f.lastIndexOf("/") + 1));
 	}
 }
