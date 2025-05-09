@@ -73,7 +73,7 @@ class PsychFile
 
 		if (Assets.exists(path, FONT))
 			return ByteArray.fromFile(path);
-		if (Assets.exists(path))
+		else if (Assets.exists(path))
 			return Assets.getBytes(path);
 
 		return Bytes.ofString('');
