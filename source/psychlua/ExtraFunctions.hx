@@ -251,15 +251,13 @@ class ExtraFunctions
 		});
 		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
 			var list:Array<String> = [];
-			#if sys
-			if(PsychFileSystem.exists(folder)) {
+			//if(PsychFileSystem.exists(folder)) {
 				for (folder in PsychFileSystem.readDirectory(folder)) {
 					if (!list.contains(folder)) {
 						list.push(folder);
 					}
 				}
-			}
-			#end
+			//}
 			return list;
 		});
 

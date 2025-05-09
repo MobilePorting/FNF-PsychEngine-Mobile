@@ -760,7 +760,7 @@ class LoadingState extends MusicBeatState
 		//trace('precaching sound: $file');
 		if(!Paths.currentTrackedSounds.exists(file))
 		{
-			if (#if sys PsychFileSystem.exists(file) || #end OpenFlAssets.exists(file, SOUND))
+			if (PsychFileSystem.exists(file))
 			{
 				var sound:Sound = #if sys Sound.fromFile(file) #else OpenFlAssets.getSound(file, false) #end;
 				mutex.acquire();
@@ -792,13 +792,9 @@ class LoadingState extends MusicBeatState
 			if (!Paths.currentTrackedAssets.exists(requestKey))
 			{
 				var file:String = Paths.getPath(requestKey, IMAGE);
-				if (#if sys PsychFileSystem.exists(file) || #end OpenFlAssets.exists(file, IMAGE))
+				if (PsychFileSystem.exists(file))
 				{
-					#if sys
-					var bitmap:BitmapData = BitmapData.fromFile(file);
-					#else
-					var bitmap:BitmapData = OpenFlAssets.getBitmapData(file, false);
-					#end
+					var bitmap:BitmapData = BitmapData.fromBytes(PsychFile.getBytes(file));
 
 					mutex.acquire();
 					requestedBitmaps.set(file, bitmap);

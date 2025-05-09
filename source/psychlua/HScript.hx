@@ -144,10 +144,8 @@ class HScript extends Iris
 
 		// Some very commonly used classes
 		set('Type', Type);
-		#if sys
-		set('File', File);
-		set('PsychFileSystem', PsychFileSystem);
-		#end
+		set('File', PsychFile);
+		set('FileSystem', PsychFileSystem);
 		set('FlxG', flixel.FlxG);
 		set('FlxMath', flixel.math.FlxMath);
 		set('FlxSprite', flixel.FlxSprite);
