@@ -37,7 +37,7 @@ using StringTools;
  */
 class PsychFileSystem
 {
-	static var cwd:String = #if android StorageUtil.getExternalStorageDirectory() #else Sys.getCwd() #end;
+	static final cwd:String = #if android StorageUtil.getExternalStorageDirectory() #else Sys.getCwd() #end;
 
 	inline static function check(path:String):String
 	{
@@ -126,17 +126,17 @@ class PsychFileSystem
 			return FileSystem.readDirectory(check(path));
 		#end
 
-		var dirs:Array<String> = [];
+		final dirs:Array<String> = [];
 		for (item in Assets.list().filter(f -> f.startsWith(path)))
 		{
 			@:privateAccess
 			for (library in lime.utils.Assets.libraries.keys())
 			{
-				var libPath:String = '$library:$item';
-				if (library != 'default' && Assets.exists(libPath) && !results.contains(libPath))
-					results.push(libPath);
-				else if (Assets.exists(item) && !results.contains(item))
-					results.push(item);
+				final libPath:String = '$library:$item';
+				if (library != 'default' && Assets.exists(libPath) && !dirs.contains(libPath))
+					dirs.push(libPath);
+				else if (Assets.exists(item) && !dirs.contains(item))
+					dirs.push(item);
 			}
 		}
 		return dirs.map(f -> f.substr(f.lastIndexOf("/") + 1));

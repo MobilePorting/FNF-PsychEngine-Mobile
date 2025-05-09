@@ -40,7 +40,7 @@ using StringTools;
  */
 class PsychFile
 {
-	static var cwd:String = #if android StorageUtil.getExternalStorageDirectory() #else Sys.getCwd() #end;
+	static final cwd:String = #if android StorageUtil.getExternalStorageDirectory() #else Sys.getCwd() #end;
 
 	inline static function check(path:String):String
 	{
@@ -52,7 +52,7 @@ class PsychFile
 	public static function getContent(path:String):String
 	{
 		#if sys
-		var fullPath:String = check(path);
+		final fullPath:String = check(path);
 		if (FileSystem.exists(fullPath))
 			return File.getContent(fullPath);
 		#end
@@ -66,7 +66,7 @@ class PsychFile
 	public static function getBytes(path:String):Bytes
 	{
 		#if sys
-		var fullPath:String = check(path);
+		final fullPath:String = check(path);
 		if (FileSystem.exists(fullPath))
 			return File.getBytes(fullPath);
 		#end
