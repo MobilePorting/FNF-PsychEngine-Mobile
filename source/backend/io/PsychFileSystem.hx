@@ -37,19 +37,19 @@ using StringTools;
  */
 class PsychFileSystem
 {
-	inline static function cwd(path:String):String
+	static var cwd:String = #if android StorageUtil.getExternalStorageDirectory() #else Sys.getCwd() #end;
+
+	inline static function check(path:String):String
 	{
-		#if android
-        return StorageUtil.getExternalStorageDirectory() + path;
-        #else
-        return Sys.getCwd() + path;
-        #end
+		if (path.startsWith(cwd))
+			return path;
+		return haxe.io.Path.join([cwd, path]);
 	}
 
 	public static function exists(path:String):Bool
 	{
 		#if sys
-		if (FileSystem.exists(cwd(path)))
+		if (FileSystem.exists(check(path)))
 			return true;
 		#end
 		return Assets.exists(path);
@@ -58,14 +58,14 @@ class PsychFileSystem
 	public static function rename(path:String, newPath:String):Void
 	{
 		#if sys
-		FileSystem.rename(cwd(path), cwd(newPath));
+		FileSystem.rename(check(path), check(newPath));
 		#end
 	}
 
 	public static function stat(path:String):Null<FileStat>
 	{
 		#if sys
-		return FileSystem.stat(cwd(path));
+		return FileSystem.stat(check(path));
 		#else
 		return null;
 		#end
@@ -92,7 +92,7 @@ class PsychFileSystem
 	public static function isDirectory(path:String):Bool
 	{
 		#if sys
-		if (FileSystem.isDirectory(cwd(path)))
+		if (FileSystem.isDirectory(check(path)))
 			return true;
 		#end
 		return Assets.list().filter(folder -> folder.startsWith(path) && folder != path).length > 0;
@@ -101,29 +101,29 @@ class PsychFileSystem
 	public static function createDirectory(path:String):Void
 	{
 		#if sys
-		FileSystem.createDirectory(cwd(path));
+		FileSystem.createDirectory(check(path));
 		#end
 	}
 
 	public static function deleteFile(path:String):Void
 	{
 		#if sys
-		FileSystem.deleteFile(cwd(path));
+		FileSystem.deleteFile(check(path));
 		#end
 	}
 
 	public static function deleteDirectory(path:String):Void
 	{
 		#if sys
-		FileSystem.deleteDirectory(cwd(path));
+		FileSystem.deleteDirectory(check(path));
 		#end
 	}
 
 	public static function readDirectory(path:String):Array<String>
 	{
 		#if sys
-		if (FileSystem.exists(path) && FileSystem.isDirectory(path))
-			return FileSystem.readDirectory(path);
+		if (FileSystem.exists(check(path)) && FileSystem.isDirectory(check(path)))
+			return FileSystem.readDirectory(check(path));
 		#end
 
 		var results:Array<String> = [];

@@ -442,7 +442,7 @@ class Paths
 
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '')
-		return 'mods/' + key;
+		return #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'mods/' + key;
 
 	inline static public function modsJson(key:String)
 		return modFolders('data/' + key + '.json');
@@ -496,7 +496,7 @@ class Paths
 			}
 			#end
 		}
-		return 'mods/' + key;
+		return #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'mods/' + key;
 	}
 
 	#if linux

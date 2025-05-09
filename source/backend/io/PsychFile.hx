@@ -40,19 +40,19 @@ using StringTools;
  */
 class PsychFile
 {
-	inline static function cwd(path:String):String
+	static var cwd:String = #if android StorageUtil.getExternalStorageDirectory() #else Sys.getCwd() #end;
+
+	inline static function check(path:String):String
 	{
-		#if android
-        return StorageUtil.getExternalStorageDirectory() + path;
-        #else
-        return Sys.getCwd() + path;
-        #end
+		if (path.startsWith(cwd))
+			return path;
+		return haxe.io.Path.join([cwd, path]);
 	}
 
 	public static function getContent(path:String):String
 	{
 		#if sys
-		var fullPath:String = cwd(path);
+		var fullPath:String = check(path);
 		if (FileSystem.exists(fullPath))
 			return File.getContent(fullPath);
 		#end
@@ -66,7 +66,7 @@ class PsychFile
 	public static function getBytes(path:String):Bytes
 	{
 		#if sys
-		var fullPath:String = cwd(path);
+		var fullPath:String = check(path);
 		if (FileSystem.exists(fullPath))
 			return File.getBytes(fullPath);
 		#end
@@ -82,21 +82,21 @@ class PsychFile
 	public static function saveContent(path:String, content:String):Void
 	{
 		#if sys
-		File.saveContent(cwd(path), content);
+		File.saveContent(check(path), content);
 		#end
 	}
 
 	public static function saveBytes(path:String, bytes:Bytes):Void
 	{
 		#if sys
-		File.saveBytes(cwd(path), bytes);
+		File.saveBytes(check(path), bytes);
 		#end
 	}
 
 	public static function read(path:String, binary:Bool = true):Null<FileInput>
 	{
 		#if sys
-		return File.read(cwd(path), binary);
+		return File.read(check(path), binary);
 		#else
 		return null;
 		#end
@@ -105,7 +105,7 @@ class PsychFile
 	public static function write(path:String, binary:Bool = true):Null<FileOutput>
 	{
 		#if sys
-		return File.write(cwd(path), binary);
+		return File.write(check(path), binary);
 		#else
 		return null;
 		#end
@@ -114,7 +114,7 @@ class PsychFile
 	public static function append(path:String, binary:Bool = true):Null<FileOutput>
 	{
 		#if sys
-		return File.append(cwd(path), binary);
+		return File.append(check(path), binary);
 		#else
 		return null;
 		#end
@@ -123,7 +123,7 @@ class PsychFile
 	public static function update(path:String, binary:Bool = true):Null<FileOutput>
 	{
 		#if sys
-		return File.update(cwd(path), binary);
+		return File.update(check(path), binary);
 		#else
 		return null;
 		#end
@@ -132,7 +132,7 @@ class PsychFile
 	public static function copy(srcPath:String, dstPath:String):Void
 	{
 		#if sys
-		File.copy(cwd(srcPath), cwd(dstPath));
+		File.copy(check(srcPath), check(dstPath));
 		#end
 	}
 }

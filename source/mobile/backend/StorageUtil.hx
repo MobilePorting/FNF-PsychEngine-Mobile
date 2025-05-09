@@ -37,10 +37,10 @@ class StorageUtil
 		final folder:String = #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'saves/';
 		try
 		{
-			if (!PsychFileSystem.exists(folder))
-				PsychFileSystem.createDirectory(folder);
+			if (!FileSystem.exists(folder))
+				FileSystem.createDirectory(folder);
 
-			PsychFile.saveContent('$folder/$fileName', fileData);
+			File.saveContent('$folder/$fileName', fileData);
 			if (alert)
 				CoolUtil.showPopUp(Language.getPhrase('file_save_success', '{1} has been saved.', [fileName]), Language.getPhrase('mobile_success', "Success!"));
 		}
@@ -75,8 +75,8 @@ class StorageUtil
 
 		try
 		{
-			if (!PsychFileSystem.exists(StorageUtil.getStorageDirectory()))
-				PsychFileSystem.createDirectory(StorageUtil.getStorageDirectory());
+			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
+				FileSystem.createDirectory(StorageUtil.getStorageDirectory());
 		}
 		catch (e:Dynamic)
 		{
@@ -86,8 +86,8 @@ class StorageUtil
 
 		try
 		{
-			if (!PsychFileSystem.exists(StorageUtil.getExternalStorageDirectory() + 'mods'))
-				PsychFileSystem.createDirectory(StorageUtil.getExternalStorageDirectory() + 'mods');
+			if (!FileSystem.exists(StorageUtil.getExternalStorageDirectory() + 'mods'))
+				FileSystem.createDirectory(StorageUtil.getExternalStorageDirectory() + 'mods');
 		}
 		catch (e:Dynamic)
 		{
